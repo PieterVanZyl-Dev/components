@@ -21,7 +21,7 @@ import {
 } from './utils';
 import VisibleContentPreference from './visible-content';
 import checkControlled from '../internal/hooks/check-controlled';
-import { CollectionPreferencesProps } from './interfaces';
+import { CollectionPreferencesProps, UnreleasedProps } from './interfaces';
 import styles from './styles.css.js';
 import { applyDisplayName } from '../internal/utils/apply-display-name';
 import useBaseComponent from '../internal/hooks/use-base-component';
@@ -45,7 +45,7 @@ export default function CollectionPreferences({
   preferences,
   customPreference,
   ...rest
-}: CollectionPreferencesProps) {
+}: CollectionPreferencesProps & UnreleasedProps) {
   const { __internalRootRef } = useBaseComponent('CollectionPreferences');
   checkControlled('CollectionPreferences', 'preferences', preferences, 'onConfirm', onConfirm);
   const baseProps = getBaseProps(rest);
@@ -81,7 +81,7 @@ export default function CollectionPreferences({
   );
   const hasRightContent = !!(visibleContentPreference || contentDisplayPreference);
 
-  const onChange = (changedPreferences: CollectionPreferencesProps.Preferences) =>
+  const onChange = (changedPreferences: UnreleasedProps.Preferences) =>
     setTemporaryPreferences(mergePreferences(changedPreferences, temporaryPreferences));
 
   return (

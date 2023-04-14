@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import styles from '../styles.css.js';
 import DragHandle from '../../internal/drag-handle';
 import InternalToggle from '../../toggle/internal';
-import { CollectionPreferencesProps } from '../interfaces';
+import { UnreleasedProps } from '../interfaces';
 
 export const className = (suffix: string) => ({
   className: styles[`sortable-item-${suffix}`],
@@ -28,7 +28,7 @@ export function SortableItem({
   isVisible: boolean;
   onKeyDown?: (event: React.KeyboardEvent) => void;
   onToggle: (id: string) => void;
-  option: CollectionPreferencesProps.ContentDisplayOption;
+  option: UnreleasedProps.ContentDisplayOption;
 }) {
   const { isDragging, isSorting, listeners, over, rect, setNodeRef, transform } = useSortable({
     id: option.id,

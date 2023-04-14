@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useCollection } from '@cloudscape-design/collection-hooks';
 import Button from '~components/button';
-import CollectionPreferences, { CollectionPreferencesProps } from '~components/collection-preferences';
+import CollectionPreferences from '~components/collection-preferences';
 import Header from '~components/header';
 import Pagination from '~components/pagination';
 import Table from '~components/table';
@@ -12,39 +12,38 @@ import { Instance, generateItems } from './generate-data';
 import { columnsConfig, EmptyState, getMatchesCountText, paginationLabels, pageSizeOptions } from './shared-configs';
 import ScreenshotArea from '../utils/screenshot-area';
 import { contentDisplayPreferenceI18nStrings } from '../common/i18n-strings';
+import { UnreleasedProps } from '~components/collection-preferences/interfaces';
 
 const allItems = generateItems();
 
-const visibleContentOptions: ReadonlyArray<CollectionPreferencesProps.ContentDisplayPreference> = [
-  {
-    title: 'Column preferences',
-    description: 'Customize the columns visibility and order.',
-    options: [
-      {
-        id: 'id',
-        label: 'ID',
-        alwaysVisible: true,
-      },
-      { id: 'type', label: 'Type' },
-      {
-        id: 'dnsName',
-        label: 'DNS name',
-      },
-      {
-        id: 'imageId',
-        label: 'Image ID',
-      },
-      {
-        id: 'state',
-        label: 'State',
-      },
-    ],
-    ...contentDisplayPreferenceI18nStrings,
-  },
-];
+const contentDisplayPreference = {
+  title: 'Column preferences',
+  description: 'Customize the columns visibility and order.',
+  options: [
+    {
+      id: 'id',
+      label: 'ID',
+      alwaysVisible: true,
+    },
+    { id: 'type', label: 'Type' },
+    {
+      id: 'dnsName',
+      label: 'DNS name',
+    },
+    {
+      id: 'imageId',
+      label: 'Image ID',
+    },
+    {
+      id: 'state',
+      label: 'State',
+    },
+  ],
+  ...contentDisplayPreferenceI18nStrings,
+};
 
 export default function App() {
-  const [preferences, setPreferences] = useState<CollectionPreferencesProps.Preferences>({
+  const [preferences, setPreferences] = useState<UnreleasedProps.Preferences>({
     pageSize: 20,
     contentDisplay: [
       { id: 'id', visible: true },
@@ -110,9 +109,7 @@ export default function App() {
               options: pageSizeOptions,
             }}
             contentDisplayPreference={{
-              title: 'Column preferences',
-              description: 'Customize the columns visibility and order.',
-              options: visibleContentOptions[0].options,
+              ...contentDisplayPreference,
               ...contentDisplayPreferenceI18nStrings,
             }}
             wrapLinesPreference={{

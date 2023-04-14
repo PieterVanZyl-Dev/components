@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import { CollectionPreferencesProps } from '~components/collection-preferences/interfaces';
+import { UnreleasedProps } from '~components/collection-preferences/interfaces';
 
-export const contentDisplayPreferenceI18nStrings: Partial<CollectionPreferencesProps.ContentDisplayPreference> = {
+export const contentDisplayPreferenceI18nStrings: Partial<UnreleasedProps.ContentDisplayPreference> = {
   liveAnnouncementDndStarted: (position, total) => `Picked up item at position ${position} of ${total}`,
   liveAnnouncementDndDiscarded: 'Reordering canceled',
   liveAnnouncementDndItemReordered: (initialPosition, currentPosition, total) =>

@@ -7,7 +7,7 @@ import InternalColumnLayout from '../column-layout/internal';
 import InternalFormField from '../form-field/internal';
 import InternalRadioGroup from '../radio-group/internal';
 import { useContainerBreakpoints } from '../internal/hooks/container-queries';
-import { CollectionPreferencesProps } from './interfaces';
+import { CollectionPreferencesProps, UnreleasedProps } from './interfaces';
 import styles from './styles.css.js';
 
 export const copyPreferences = ({
@@ -18,7 +18,7 @@ export const copyPreferences = ({
   visibleContent,
   contentDisplay,
   custom,
-}: CollectionPreferencesProps.Preferences): CollectionPreferencesProps.Preferences => ({
+}: UnreleasedProps.Preferences): UnreleasedProps.Preferences => ({
   pageSize,
   wrapLines,
   stripedRows,
@@ -28,12 +28,12 @@ export const copyPreferences = ({
   custom,
 });
 
-type CopyPreferenceName = keyof CollectionPreferencesProps.Preferences;
+type CopyPreferenceName = keyof UnreleasedProps.Preferences;
 
 export const mergePreferences = (
-  newPref: CollectionPreferencesProps.Preferences,
-  oldPref: CollectionPreferencesProps.Preferences
-): CollectionPreferencesProps.Preferences => {
+  newPref: UnreleasedProps.Preferences,
+  oldPref: UnreleasedProps.Preferences
+): UnreleasedProps.Preferences => {
   const newObj = { ...oldPref };
   const prefNames: CopyPreferenceName[] = [
     'pageSize',

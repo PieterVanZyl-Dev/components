@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import clsx from 'clsx';
 import React, { useImperativeHandle, useRef, useState } from 'react';
-import { TableForwardRefType, TableProps } from './interfaces';
+import { TableForwardRefType, TableProps, UnreleasedProps } from './interfaces';
 import { getVisualContextClassname } from '../internal/components/visual-context';
 import InternalContainer from '../container/internal';
 import { getBaseProps } from '../internal/base-component';
@@ -34,6 +34,7 @@ import useTableFocusNavigation from './use-table-focus-navigation';
 import { SomeRequired } from '../internal/types';
 import { TableTdElement } from './body-cell/td-element';
 type InternalTableProps<T> = SomeRequired<TableProps<T>, 'items' | 'selectedItems' | 'variant'> &
+  UnreleasedProps &
   InternalBaseComponentProps;
 
 const InternalTable = React.forwardRef(

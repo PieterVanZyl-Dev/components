@@ -3,7 +3,7 @@
 import React from 'react';
 import { useUniqueId } from '../../internal/hooks/use-unique-id';
 
-import { CollectionPreferencesProps } from '../interfaces';
+import { UnreleasedProps } from '../interfaces';
 import styles from '../styles.css.js';
 import { getSortedOptions } from './utils';
 import { DndContext } from '@dnd-kit/core';
@@ -18,9 +18,9 @@ const className = (suffix: string) => ({
   className: styles[`${componentPrefix}-${suffix}`],
 });
 
-interface ContentDisplayPreferenceProps extends CollectionPreferencesProps.ContentDisplayPreference {
-  onChange: (value: ReadonlyArray<CollectionPreferencesProps.ContentDisplayItem>) => void;
-  value?: ReadonlyArray<CollectionPreferencesProps.ContentDisplayItem>;
+interface ContentDisplayPreferenceProps extends UnreleasedProps.ContentDisplayPreference {
+  onChange: (value: ReadonlyArray<UnreleasedProps.ContentDisplayItem>) => void;
+  value?: ReadonlyArray<UnreleasedProps.ContentDisplayItem>;
 }
 
 export default function ContentDisplayPreference({

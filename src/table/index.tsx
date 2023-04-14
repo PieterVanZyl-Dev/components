@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
-import { TableForwardRefType, TableProps } from './interfaces';
+import { TableForwardRefType, TableProps, UnreleasedProps } from './interfaces';
 import { applyDisplayName } from '../internal/utils/apply-display-name';
 import InternalTable from './internal';
 import useBaseComponent from '../internal/hooks/use-base-component';
@@ -9,7 +9,13 @@ import useBaseComponent from '../internal/hooks/use-base-component';
 export { TableProps };
 const Table = React.forwardRef(
   <T,>(
-    { items = [], selectedItems = [], variant = 'container', contentDensity = 'comfortable', ...props }: TableProps<T>,
+    {
+      items = [],
+      selectedItems = [],
+      variant = 'container',
+      contentDensity = 'comfortable',
+      ...props
+    }: TableProps<T> & UnreleasedProps,
     ref: React.Ref<TableProps.Ref>
   ) => {
     const baseComponentProps = useBaseComponent('Table');

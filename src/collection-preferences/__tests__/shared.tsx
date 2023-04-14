@@ -5,6 +5,7 @@ import { render } from '@testing-library/react';
 import CollectionPreferences, { CollectionPreferencesProps } from '../../../lib/components/collection-preferences';
 import createWrapper from '../../../lib/components/test-utils/dom';
 import { CollectionPreferencesWrapper } from '../../../lib/components/test-utils/dom';
+import { UnreleasedProps } from '../interfaces';
 
 export function renderCollectionPreferences(props: Partial<CollectionPreferencesProps>): CollectionPreferencesWrapper {
   render(<CollectionPreferences title="Preferences title" confirmLabel="Confirm" cancelLabel="Cancel" {...props} />);
@@ -58,7 +59,7 @@ export const contentDensityPreference: CollectionPreferencesProps.ContentDensity
   description: 'Display the content in a denser, more compact mode',
 };
 
-export const contentDisplayPreference: CollectionPreferencesProps.ContentDisplayPreference = {
+export const contentDisplayPreference: UnreleasedProps.ContentDisplayPreference = {
   title: 'Content display title',
   description: 'Content display description',
   options: [

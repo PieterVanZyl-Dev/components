@@ -1,6 +1,6 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import { CollectionPreferencesProps } from '../interfaces';
+import { UnreleasedProps } from '../interfaces';
 import { DragEndEvent, DragOverEvent, DragStartEvent } from '@dnd-kit/core';
 import { useRef } from 'react';
 
@@ -11,9 +11,9 @@ export default function useLiveAnnouncements({
   liveAnnouncementDndItemCommitted,
   liveAnnouncementDndDiscarded,
   sortedOptions,
-}: Partial<CollectionPreferencesProps.ContentDisplayPreference> & {
+}: Partial<UnreleasedProps.ContentDisplayPreference> & {
   isDragging: boolean;
-  sortedOptions: ReadonlyArray<CollectionPreferencesProps.ContentDisplayItem>;
+  sortedOptions: ReadonlyArray<UnreleasedProps.ContentDisplayItem>;
 }) {
   const isFirstAnnouncement = useRef(true);
   if (!isDragging) {
