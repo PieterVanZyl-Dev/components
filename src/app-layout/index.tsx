@@ -47,6 +47,8 @@ import RefreshedAppLayout from './visual-refresh';
 import { useInternalI18n } from '../internal/i18n/context';
 import { useSplitPanelFocusControl } from './utils/use-split-panel-focus-control';
 import { useDrawerFocusControl } from './utils/use-drawer-focus-control';
+import { awsuiPluginsInternal } from './plugins/internal';
+import { RuntimeContentWrapper } from './runtime-content-wrapper';
 
 export { AppLayoutProps };
 
@@ -56,6 +58,7 @@ const AppLayout = React.forwardRef(
     ref: React.Ref<AppLayoutProps.Ref>
   ) => {
     const { __internalRootRef } = useBaseComponent<HTMLDivElement>('AppLayout');
+    const [runtimeDrawers, setRuntimeDrawers] = useState<Array<DrawerItem>>([]);
     const isRefresh = useVisualRefresh();
 
     const i18n = useInternalI18n('app-layout');
@@ -74,9 +77,29 @@ const AppLayout = React.forwardRef(
 
     const baseProps = getBaseProps(rest);
 
+    useEffect(() => {
+      awsuiPluginsInternal.registerAppLayout(drawers =>
+        setRuntimeDrawers(
+          drawers.map(({ mountContent, unmountContent, ...runtimeDrawer }) => ({
+            ...runtimeDrawer,
+            content: <RuntimeContentWrapper mountContent={mountContent} unmountContent={unmountContent} />,
+          }))
+        )
+      );
+    }, []);
+
+    const ownDrawers = (props as any).drawers;
+
+    const finalDrawers = { ...ownDrawers };
+    finalDrawers.items = ([] as Array<DrawerItem>).concat(finalDrawers.items ?? [], runtimeDrawers);
+
     return (
       <div ref={__internalRootRef} {...baseProps}>
-        {isRefresh ? <RefreshedAppLayout {...props} ref={ref} /> : <OldAppLayout {...props} ref={ref} />}
+        {isRefresh ? (
+          <RefreshedAppLayout {...props} {...{ drawers: ownDrawers && finalDrawers }} ref={ref} />
+        ) : (
+          <OldAppLayout {...props} {...{ drawers: ownDrawers && finalDrawers }} ref={ref} />
+        )}
       </div>
     );
   }

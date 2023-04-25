@@ -76,6 +76,7 @@ export interface DrawerItem {
   ariaLabels: DrawerItemAriaLabels;
   resizable?: boolean;
   size?: number;
+  onResize?: (newSize: number) => void;
 }
 
 export interface SizeControlProps {
