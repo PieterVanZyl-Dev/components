@@ -2356,7 +2356,7 @@ Sizes are automatically scaled down in compact mode.
       "defaultValue": "\\"div\\"",
       "description": "Defines the style of element to display.
 - If you set it to \`'div'\`, \`'span'\`, \`'h1'\`, \`'h2'\`, \`'h3'\`, \`'h4'\`, \`'h5'\`, \`'p'\`, \`'strong'\`, \`'small'\`, \`'code'\`, \`'pre'\`, or \`'samp'\`, the variant is also used as the HTML tag name.
-- If you set it to \`awsui-key-label\`, the component will display as a \`div\`.
+- If you set it to \`awsui-key-label\` or \`awsui-separator\`, the component will display as a \`div\`.
 - If you set it to \`awsui-value-large\`, the component will display as a \`span\`.
 
 Override the HTML tag by using property \`tagOverride\`.
@@ -2380,6 +2380,7 @@ Override the HTML tag by using property \`tagOverride\`.
           "samp",
           "awsui-key-label",
           "awsui-value-large",
+          "awsui-separator",
         ],
       },
       "name": "variant",
@@ -2864,7 +2865,8 @@ This property only applies when an \`href\` is provided.",
 * \`normal\` for secondary buttons.
 * \`link\` for tertiary buttons.
 * \`icon\` to display an icon only (no text).
-* \`inline-icon\` to display an icon-only (no text) button within a text context.",
+* \`inline-icon\` to display an icon-only (no text) button within a text context.
+* \`inline-action\` to display an action inside a table cell.",
       "inlineType": Object {
         "name": "ButtonProps.Variant",
         "type": "union",
@@ -2874,6 +2876,7 @@ This property only applies when an \`href\` is provided.",
           "link",
           "icon",
           "inline-icon",
+          "inline-action",
         ],
       },
       "name": "variant",

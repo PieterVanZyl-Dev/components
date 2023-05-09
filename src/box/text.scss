@@ -48,6 +48,12 @@
       font-weight: awsui.$font-box-value-large-weight;
       color: inherit;
     }
+    &.separator-variant {
+      display: block;
+      height: 100%;
+      width: awsui.$border-divider-section-width;
+      background-color: awsui.$color-border-divider-default;
+    }
     &.h1-variant.font-weight-default,
     &.h2-variant.font-weight-default,
     &.h3-variant.font-weight-default,

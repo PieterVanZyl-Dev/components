@@ -25,27 +25,44 @@ const columnDefinitions: TableProps.ColumnDefinition<Instance>[] = [
           Verify payment
         </Link>
       ) : (
-        <Button variant="link" ariaLabel={`Download ${item.id}`}>
+        <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
           Download
         </Button>
       ),
   },
   {
+    id: 'multiple-actions',
+    header: 'Actions',
+    cell: item => (
+      <SpaceBetween size="m" direction="horizontal">
+        <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
+          Download
+        </Button>
+        <Box variant="awsui-separator" />
+        <Button variant="inline-action" ariaLabel={`Upload ${item.id}`}>
+          Update
+        </Button>
+      </SpaceBetween>
+    ),
+  },
+  {
     id: 'action-dropdown',
     header: 'Actions',
     cell: item => (
-      <ButtonDropdown
-        variant="icon"
-        expandToViewport={true}
-        ariaLabel={`${item.id} actions`}
-        items={[
-          { id: 'share', text: 'Share' },
-          { id: 'edit', text: 'Edit' },
-          { id: 'delete', text: 'Delete' },
-          { id: 'connect', text: 'Connect' },
-          { id: 'manage', text: 'Manage state' },
-        ]}
-      />
+      <Box textAlign="center">
+        <ButtonDropdown
+          variant="icon"
+          expandToViewport={true}
+          ariaLabel={`${item.id} actions`}
+          items={[
+            { id: 'share', text: 'Share' },
+            { id: 'edit', text: 'Edit' },
+            { id: 'delete', text: 'Delete' },
+            { id: 'connect', text: 'Connect' },
+            { id: 'manage', text: 'Manage state' },
+          ]}
+        />
+      </Box>
     ),
   },
 ];
@@ -62,13 +79,19 @@ export default function () {
             header={<Header>Table with single actions</Header>}
             columnDefinitions={columnDefinitions}
             items={items}
-            columnDisplay={columnDisplay.filter(({ id }) => id !== 'action-dropdown')}
+            columnDisplay={columnDisplay.filter(({ id }) => id !== 'action-dropdown' && id !== 'multiple-actions')}
+          />
+          <Table
+            header={<Header>Table with multiple actions</Header>}
+            columnDefinitions={columnDefinitions}
+            items={items}
+            columnDisplay={columnDisplay.filter(({ id }) => id !== 'single-action' && id !== 'action-dropdown')}
           />
           <Table
             header={<Header>Table with action dropdowns</Header>}
             columnDefinitions={columnDefinitions}
             items={items}
-            columnDisplay={columnDisplay.filter(({ id }) => id !== 'single-action')}
+            columnDisplay={columnDisplay.filter(({ id }) => id !== 'single-action' && id !== 'multiple-actions')}
           />
         </SpaceBetween>
       </Box>
