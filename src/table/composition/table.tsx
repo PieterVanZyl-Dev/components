@@ -3,6 +3,13 @@
 import React from 'react';
 import styles from './styles.css.js';
 
-export default function Table({ children }: any) {
-  return <table className={styles.table}>{children}</table>;
-}
+export default React.forwardRef<
+  HTMLTableElement,
+  { children?: React.ReactNode; nativeAttributes?: React.HTMLAttributes<HTMLTableElement> }
+>(function Table({ children, nativeAttributes }, ref) {
+  return (
+    <table className={styles.table} {...nativeAttributes} ref={ref}>
+      {children}
+    </table>
+  );
+});
