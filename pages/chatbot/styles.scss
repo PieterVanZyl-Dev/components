@@ -1,0 +1,56 @@
+/*
+ Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ SPDX-License-Identifier: Apache-2.0
+*/
+
+@use '~design-tokens' as awsui;
+
+.chat-container {
+  display: flex;
+  padding: awsui.$space-scaled-s;
+}
+
+.chat-message {
+  display: flex;
+  overflow-x: auto;
+  padding: awsui.$space-scaled-xs;
+  background-color: awsui.$color-background-container-header;
+  border-radius: awsui.$space-scaled-s;
+  &.chat-message-user {
+    flex-direction: row-reverse;
+    background-color: awsui.$color-background-cell-shaded;
+  }
+}
+
+.chat-avatar {
+  height: 50px;
+  width: 50px;
+  align-self: flex-start;
+}
+
+.chat-content {
+  align-self: center;
+  padding-left: awsui.$space-scaled-xs;
+  padding-right: awsui.$space-scaled-xs;
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.chat-content > p {
+  padding: 0;
+  margin: 0;
+}
+
+/* stylelint-disable-next-line selector-max-type */
+.chat-content > pre {
+  white-space: pre-wrap;
+}
+
+.chat-input {
+  display: flex;
+  margin-top: awsui.$space-scaled-s;
+  gap: awsui.$space-scaled-xs;
+
+  > :first-child {
+    flex: 1;
+  }
+}
