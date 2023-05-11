@@ -92,6 +92,7 @@ function CloudscapeAssistant() {
     const updatedMessage = [...messages, { role: 'user', content: value }];
     setMessages(updatedMessage);
     setLoading(true);
+    setValue('');
     fetch('http://localhost:3000', {
       method: 'post',
       headers: { 'content-type': 'application/json' },
@@ -121,13 +122,16 @@ function CloudscapeAssistant() {
       <Form errorText={errorMessage}>
         <SpaceBetween size="xs">
           {[
-            { role: 'assistant', content: 'How can I assist you with the documentation for the AWS design system?' },
+            {
+              role: 'assistant',
+              content: 'Hi there, how can I assist you with the documentation for the AWS design system?',
+            },
             ...messages,
           ].map((message, index) => (
             <ChatMessage key={index} message={message} />
           ))}
         </SpaceBetween>
-        {loading && <>Loading</>}
+        {loading && <ChatMessage message={{ role: 'assistant', content: 'I am thinking hard...' }}></ChatMessage>}
         <div className={styles['chat-input']}>
           <FormField secondaryControl={<Button onClick={handleSend}>Send</Button>}>
             <Input
@@ -135,6 +139,12 @@ function CloudscapeAssistant() {
               value={value}
               onChange={event => setValue(event.detail.value)}
               type="search"
+              disabled={loading}
+              onKeyUp={({ detail }) => {
+                if (detail.keyCode === 13) {
+                  handleSend();
+                }
+              }}
             />
           </FormField>
         </div>
