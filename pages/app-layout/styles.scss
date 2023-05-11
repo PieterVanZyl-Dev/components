@@ -79,3 +79,26 @@
     margin-top: 4rem;
   }
 }
+
+.chat-container {
+  display: flex;
+  padding: awsui.$space-scaled-xs;
+  background-color: awsui.$color-background-container-header;
+  &.chat-container-user {
+    background-color: awsui.$color-background-cell-shaded;
+  }
+}
+
+.chat-avatar {
+  height: 50px;
+  width: 50px;
+}
+
+.chat-content {
+  padding: awsui.$space-scaled-xs;
+}
+
+.chat-input {
+  position: fixed;
+  bottom: awsui.$space-scaled-l;
+}

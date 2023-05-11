@@ -14,6 +14,15 @@ import {
 } from '~components';
 import appLayoutLabels from './utils/labels';
 import ScreenshotArea from '../utils/screenshot-area';
+import styles from './styles.scss';
+import customer from './customer.svg';
+import cloudscapeGPT from './cloudscapeGPT.svg';
+import clsx from 'clsx';
+
+interface Message {
+  role: string;
+  content: string;
+}
 
 export default function WithDrawers() {
   const [activeDrawerId, setActiveDrawerId] = useState<string | null>(null);
@@ -23,7 +32,7 @@ export default function WithDrawers() {
       ariaLabel: 'Drawers',
       activeDrawerId: activeDrawerId,
       widths: {
-        'cloudscape-help': 600,
+        'cloudscape-help': 1200,
       },
       items: [
         {
@@ -38,6 +47,7 @@ export default function WithDrawers() {
           trigger: {
             iconName: 'contact',
           },
+          resizable: true,
         },
       ],
       onChange: (event: NonCancelableCustomEvent<string>) => {
@@ -61,33 +71,36 @@ export default function WithDrawers() {
   );
 }
 
-function ChatMessage({ message }: any) {
-  return <ReactMarkdown>{message}</ReactMarkdown>;
+function ChatMessage({ message }: { message: Message }) {
+  return (
+    <div className={clsx(styles['chat-container'], message.role === 'user' && styles['chat-container-user'])}>
+      <img className={styles['chat-avatar']} src={message.role === 'user' ? customer : cloudscapeGPT} />
+      <div className={styles['chat-content']}>
+        <ReactMarkdown>{message.content}</ReactMarkdown>
+      </div>
+    </div>
+  );
 }
 
 function CloudscapeAssistant() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [value, setValue] = useState('');
-  const [messages, setMessages] = useState([
-    {
-      role: 'assistant',
-      content: 'Hello there! Is there anything I can help you with?',
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const handleSend = () => {
+    const updatedMessage = [...messages, { role: 'user', content: value }];
+    setMessages(updatedMessage);
     setLoading(true);
     fetch('http://localhost:3000', {
       method: 'post',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ messages: [...messages, { role: 'user', content: value }] }),
+      body: JSON.stringify({ messages: updatedMessage }),
     })
       .then(async response => {
         if (response.status === 200) {
           return response.json();
         }
-
         const data = await response.json();
         throw new Error(data.error);
       })
@@ -106,20 +119,25 @@ function CloudscapeAssistant() {
   return (
     <HelpPanel header={<h2>My Assistant</h2>}>
       <Form errorText={errorMessage}>
-        <SpaceBetween size="l">
-          {messages.map(({ content }, index) => (
-            <ChatMessage key={index} message={content} />
+        <SpaceBetween size="xs">
+          {[
+            { role: 'assistant', content: 'How can I assist you with the documentation for the AWS design system?' },
+            ...messages,
+          ].map((message, index) => (
+            <ChatMessage key={index} message={message} />
           ))}
         </SpaceBetween>
         {loading && <>Loading</>}
-        <FormField secondaryControl={<Button onClick={handleSend}>Send</Button>}>
-          <Input
-            placeholder="Ask me anything"
-            value={value}
-            onChange={event => setValue(event.detail.value)}
-            type="search"
-          />
-        </FormField>
+        <div className={styles['chat-input']}>
+          <FormField secondaryControl={<Button onClick={handleSend}>Send</Button>}>
+            <Input
+              placeholder="Ask me anything"
+              value={value}
+              onChange={event => setValue(event.detail.value)}
+              type="search"
+            />
+          </FormField>
+        </div>
       </Form>
     </HelpPanel>
   );
