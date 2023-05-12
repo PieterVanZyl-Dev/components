@@ -14,10 +14,10 @@ import { columnsConfig } from './shared-configs';
 
 const items = generateItems(10);
 
-const columnDefinitions: TableProps.ColumnDefinition<Instance>[] = [
+const columnDefinitionsSingle: TableProps.ColumnDefinition<Instance>[] = [
   ...columnsConfig,
   {
-    id: 'single-action',
+    id: 'action',
     header: 'Actions',
     cell: item =>
       item.state === 'RUNNING' ? (
@@ -30,8 +30,11 @@ const columnDefinitions: TableProps.ColumnDefinition<Instance>[] = [
         </Button>
       ),
   },
+];
+const columnDefinitionsMultiple: TableProps.ColumnDefinition<Instance>[] = [
+  ...columnsConfig,
   {
-    id: 'multiple-actions',
+    id: 'action',
     header: 'Actions',
     cell: item => (
       <SpaceBetween size="m" direction="horizontal">
@@ -45,8 +48,11 @@ const columnDefinitions: TableProps.ColumnDefinition<Instance>[] = [
       </SpaceBetween>
     ),
   },
+];
+const columnDefinitionsDropdown: TableProps.ColumnDefinition<Instance>[] = [
+  ...columnsConfig,
   {
-    id: 'action-dropdown',
+    id: 'action',
     header: 'Actions',
     cell: item => (
       <Box textAlign="center">
@@ -66,8 +72,35 @@ const columnDefinitions: TableProps.ColumnDefinition<Instance>[] = [
     ),
   },
 ];
-
-const columnDisplay = columnDefinitions.map(({ id }) => ({ id: id!, visible: true }));
+const columnDefinitionsMixed: TableProps.ColumnDefinition<Instance>[] = [
+  ...columnsConfig,
+  {
+    id: 'action',
+    header: 'Actions',
+    cell: item => (
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <SpaceBetween size="m" direction="horizontal">
+          <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
+            Download
+          </Button>
+          <Box variant="awsui-separator" />
+          <ButtonDropdown
+            variant="icon"
+            expandToViewport={true}
+            ariaLabel={`${item.id} actions`}
+            items={[
+              { id: 'share', text: 'Share' },
+              { id: 'edit', text: 'Edit' },
+              { id: 'delete', text: 'Delete' },
+              { id: 'connect', text: 'Connect' },
+              { id: 'manage', text: 'Manage state' },
+            ]}
+          />
+        </SpaceBetween>
+      </div>
+    ),
+  },
+];
 
 export default function () {
   return (
@@ -77,21 +110,23 @@ export default function () {
         <SpaceBetween size="l">
           <Table
             header={<Header>Table with single actions</Header>}
-            columnDefinitions={columnDefinitions}
+            columnDefinitions={columnDefinitionsSingle}
             items={items}
-            columnDisplay={columnDisplay.filter(({ id }) => id !== 'action-dropdown' && id !== 'multiple-actions')}
           />
           <Table
             header={<Header>Table with multiple actions</Header>}
-            columnDefinitions={columnDefinitions}
+            columnDefinitions={columnDefinitionsMultiple}
             items={items}
-            columnDisplay={columnDisplay.filter(({ id }) => id !== 'single-action' && id !== 'action-dropdown')}
           />
           <Table
             header={<Header>Table with action dropdowns</Header>}
-            columnDefinitions={columnDefinitions}
+            columnDefinitions={columnDefinitionsDropdown}
             items={items}
-            columnDisplay={columnDisplay.filter(({ id }) => id !== 'single-action' && id !== 'multiple-actions')}
+          />
+          <Table
+            header={<Header>Table with mixed actions</Header>}
+            columnDefinitions={columnDefinitionsMixed}
+            items={items}
           />
         </SpaceBetween>
       </Box>
