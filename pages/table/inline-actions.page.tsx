@@ -78,26 +78,24 @@ const columnDefinitionsMixed: TableProps.ColumnDefinition<Instance>[] = [
     id: 'action',
     header: 'Actions',
     cell: item => (
-      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-        <SpaceBetween size="m" direction="horizontal">
-          <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
-            Download
-          </Button>
-          <Box variant="awsui-separator" />
-          <ButtonDropdown
-            variant="icon"
-            expandToViewport={true}
-            ariaLabel={`${item.id} actions`}
-            items={[
-              { id: 'share', text: 'Share' },
-              { id: 'edit', text: 'Edit' },
-              { id: 'delete', text: 'Delete' },
-              { id: 'connect', text: 'Connect' },
-              { id: 'manage', text: 'Manage state' },
-            ]}
-          />
-        </SpaceBetween>
-      </div>
+      <SpaceBetween size="m" direction="horizontal">
+        <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
+          Download
+        </Button>
+        <Box variant="awsui-separator" />
+        <ButtonDropdown
+          variant="icon"
+          expandToViewport={true}
+          ariaLabel={`${item.id} actions`}
+          items={[
+            { id: 'share', text: 'Share' },
+            { id: 'edit', text: 'Edit' },
+            { id: 'delete', text: 'Delete' },
+            { id: 'connect', text: 'Connect' },
+            { id: 'manage', text: 'Manage state' },
+          ]}
+        />
+      </SpaceBetween>
     ),
   },
 ];
