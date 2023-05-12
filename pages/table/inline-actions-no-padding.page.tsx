@@ -4,7 +4,6 @@ import React from 'react';
 import Box from '~components/box';
 import Button from '~components/button';
 import ButtonDropdown from '~components/button-dropdown';
-import Link from '~components/link';
 import Header from '~components/header';
 import SpaceBetween from '~components/space-between';
 import Table, { TableProps } from '~components/table';
@@ -22,9 +21,14 @@ const columnDefinitionsSingle: TableProps.ColumnDefinition<Instance>[] = [
     noPadding: true,
     cell: item =>
       item.state === 'RUNNING' ? (
-        <Link external={true} ariaLabel={`Verify payment for ${item.id} (opens in new tab)`}>
+        <Button
+          variant="link"
+          iconName="external"
+          iconAlign="right"
+          ariaLabel={`Verify payment for ${item.id} (opens in new tab)`}
+        >
           Verify payment
-        </Link>
+        </Button>
       ) : (
         <Button variant="link" ariaLabel={`Download ${item.id}`}>
           Download
