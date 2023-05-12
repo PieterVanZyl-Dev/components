@@ -70,6 +70,9 @@ $border-placeholder: awsui.$border-item-width solid transparent;
   &:first-child:not(.is-visual-refresh) {
     padding-left: $cell-edge-horizontal-padding;
   }
+  &-no-padding {
+    padding: 0;
+  }
   &-first-row {
     border-top: $border-placeholder;
   }

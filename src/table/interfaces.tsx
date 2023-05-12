@@ -369,6 +369,7 @@ export namespace TableProps {
     maxWidth?: number | string;
     editConfig?: EditConfig<ItemType>;
     isRowHeader?: boolean;
+    noPadding?: boolean;
     cell(item: ItemType): React.ReactNode;
   } & SortingColumn<ItemType>;
 

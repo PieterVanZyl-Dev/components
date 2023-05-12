@@ -28,6 +28,7 @@ export interface TableTdElementProps {
   stripedRows?: boolean;
   hasSelection?: boolean;
   hasFooter?: boolean;
+  noPadding?: boolean;
   columnId: string;
   stickyState: StickyColumnsModel;
   isVisualRefresh?: boolean;
@@ -55,6 +56,7 @@ export const TableTdElement = React.forwardRef<HTMLTableCellElement, TableTdElem
       isVisualRefresh,
       hasSelection,
       hasFooter,
+      noPadding,
       columnId,
       stickyState,
     },
@@ -91,6 +93,7 @@ export const TableTdElement = React.forwardRef<HTMLTableCellElement, TableTdElem
           isVisualRefresh && styles['is-visual-refresh'],
           hasSelection && styles['has-selection'],
           hasFooter && styles['has-footer'],
+          noPadding && styles['body-cell-no-padding'],
           stickyStyles.className
         )}
         onClick={onClick}
