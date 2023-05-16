@@ -1,8 +1,9 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import React from 'react';
-import { Box, BreadcrumbGroup, Container, Grid, Icon, Link, Popover, SpaceBetween } from '~components';
+import { Box, Container, Grid, Icon, Link, Popover, SpaceBetween } from '~components';
 import Breadcrumbs from './index';
+import BreadcrumbGroup from './breadcrumb-group';
 import ScreenshotArea from '../../utils/screenshot-area';
 
 export default function BreadcrumbsPermutations() {
