@@ -47,7 +47,7 @@ const columnDefinitionsMultiple: TableProps.ColumnDefinition<Instance>[] = [
         <Button variant="link" ariaLabel={`Download ${item.id}`}>
           Download
         </Button>
-        <Box variant="awsui-separator" />
+        {/* <Box variant="awsui-separator" /> */}
         <Button variant="link" ariaLabel={`Upload ${item.id}`}>
           Update
         </Button>
@@ -90,7 +90,7 @@ const columnDefinitionsMixed: TableProps.ColumnDefinition<Instance>[] = [
         <Button variant="link" ariaLabel={`Download ${item.id}`}>
           Download
         </Button>
-        <Box variant="awsui-separator" />
+        {/* <Box variant="awsui-separator" /> */}
         <ButtonDropdown
           variant="icon"
           expandToViewport={true}
