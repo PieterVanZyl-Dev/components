@@ -43,7 +43,7 @@ const columnDefinitionsMultiple: TableProps.ColumnDefinition<Instance>[] = [
     header: 'Actions',
     noPadding: true,
     cell: item => (
-      <SpaceBetween size="xxxs" direction="horizontal">
+      <SpaceBetween size="xxs" direction="horizontal">
         <Button variant="link" ariaLabel={`Download ${item.id}`}>
           Download
         </Button>
@@ -62,20 +62,18 @@ const columnDefinitionsDropdown: TableProps.ColumnDefinition<Instance>[] = [
     header: 'Actions',
     noPadding: true,
     cell: item => (
-      <Box textAlign="center">
-        <ButtonDropdown
-          variant="icon"
-          expandToViewport={true}
-          ariaLabel={`${item.id} actions`}
-          items={[
-            { id: 'share', text: 'Share' },
-            { id: 'edit', text: 'Edit' },
-            { id: 'delete', text: 'Delete' },
-            { id: 'connect', text: 'Connect' },
-            { id: 'manage', text: 'Manage state' },
-          ]}
-        />
-      </Box>
+      <ButtonDropdown
+        variant="icon"
+        expandToViewport={true}
+        ariaLabel={`${item.id} actions`}
+        items={[
+          { id: 'share', text: 'Share' },
+          { id: 'edit', text: 'Edit' },
+          { id: 'delete', text: 'Delete' },
+          { id: 'connect', text: 'Connect' },
+          { id: 'manage', text: 'Manage state' },
+        ]}
+      />
     ),
   },
 ];
