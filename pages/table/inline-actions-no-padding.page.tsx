@@ -62,18 +62,20 @@ const columnDefinitionsDropdown: TableProps.ColumnDefinition<Instance>[] = [
     header: 'Actions',
     noPadding: true,
     cell: item => (
-      <ButtonDropdown
-        variant="icon"
-        expandToViewport={true}
-        ariaLabel={`${item.id} actions`}
-        items={[
-          { id: 'share', text: 'Share' },
-          { id: 'edit', text: 'Edit' },
-          { id: 'delete', text: 'Delete' },
-          { id: 'connect', text: 'Connect' },
-          { id: 'manage', text: 'Manage state' },
-        ]}
-      />
+      <Box margin={{ left: 'xs' }}>
+        <ButtonDropdown
+          variant="icon"
+          expandToViewport={true}
+          ariaLabel={`${item.id} actions`}
+          items={[
+            { id: 'share', text: 'Share' },
+            { id: 'edit', text: 'Edit' },
+            { id: 'delete', text: 'Delete' },
+            { id: 'connect', text: 'Connect' },
+            { id: 'manage', text: 'Manage state' },
+          ]}
+        />
+      </Box>
     ),
   },
 ];
