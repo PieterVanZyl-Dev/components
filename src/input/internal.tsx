@@ -166,6 +166,10 @@ function InternalInput(
     attributes.type = 'text';
   }
 
+  if (ariaLabelledby) {
+    (attributes as any)['data-analytics-label-selector'] = `#${ariaLabelledby}`;
+  }
+
   return (
     <div {...baseProps} className={clsx(baseProps.className, styles['input-container'])} ref={__internalRootRef}>
       {__leftIcon && (

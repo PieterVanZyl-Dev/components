@@ -1,6 +1,6 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 
 import { getBaseProps } from '../internal/base-component';
@@ -16,6 +16,10 @@ import styles from './styles.css.js';
 import { InternalFormFieldProps } from './interfaces';
 import { joinStrings } from '../internal/utils/strings';
 import { useInternalI18n } from '../internal/i18n/context';
+
+import { FunnelMetrics } from '../internal/analytics';
+import { useFunnelSubStep } from '../internal/analytics/hooks/use-funnel';
+import { getSubStepAllSelector } from '../internal/analytics/selectors';
 
 interface FormFieldErrorProps {
   id?: string;
@@ -81,6 +85,9 @@ export default function InternalFormField({
   const generatedControlId = controlId || instanceUniqueId;
   const formFieldId = controlId || generatedControlId;
 
+  const { funnelInteractionId, stepNumber, stepNameSelector, subStepSelector, subStepNameSelector } =
+    useFunnelSubStep();
+
   const slotIds = getSlotIds(formFieldId, label, description, constraintText, errorText);
 
   const ariaDescribedBy = getAriaDescribedBy(slotIds);
@@ -98,6 +105,23 @@ export default function InternalFormField({
     ariaDescribedby: joinStrings(parentAriaDescribedby, ariaDescribedBy) || undefined,
     invalid: !!errorText || !!parentInvalid,
   };
+
+  useEffect(() => {
+    if (funnelInteractionId && errorText) {
+      FunnelMetrics.funnelSubStepError({
+        funnelInteractionId,
+        subStepSelector,
+        subStepNameSelector,
+        stepNumber,
+        stepNameSelector,
+        fieldErrorSelector: `#${slotIds.error}`,
+        fieldLabelSelector: `#${slotIds.label}`,
+        subStepAllSelector: getSubStepAllSelector(),
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [funnelInteractionId, errorText]);
 
   return (
     <div {...baseProps} className={clsx(baseProps.className, styles.root)} ref={__internalRootRef}>
