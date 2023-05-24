@@ -296,6 +296,8 @@ const OldAppLayout = React.forwardRef(
     const drawerSize =
       selectedDrawer?.id && drawerSizes[selectedDrawer?.id] ? drawerSizes[selectedDrawer?.id] : toolsWidth;
 
+    console.log(drawerSizes);
+
     const splitPanelPosition = splitPanelPreferences?.position || 'bottom';
     const [splitPanelReportedToggle, setSplitPanelReportedToggle] = useState<SplitPanelSideToggleProps>({
       displayed: false,
