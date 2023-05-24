@@ -27,9 +27,6 @@ export default function InternalExpandableSection({
   children,
   header,
   headerText,
-  headerCounter,
-  headerDescription,
-  headingTagOverride,
   disableContentPaddings,
   headerAriaLabel,
   __internalRootRef,
@@ -100,9 +97,6 @@ export default function InternalExpandableSection({
           expanded={!!expanded}
           header={header}
           headerText={headerText}
-          headerDescription={headerDescription}
-          headerCounter={headerCounter}
-          headingTagOverride={headingTagOverride}
           {...triggerProps}
         />
       }

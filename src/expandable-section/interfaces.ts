@@ -46,23 +46,28 @@ export interface ExpandableSectionProps extends BaseComponentProps {
   children?: React.ReactNode;
 
   /**
-   * @deprecated Use `headerText` instead.
+   * Heading displayed above the content text.
+   *
+   * When using the container variant, use the Header component. Otherwise, use plain text.
    */
   header?: React.ReactNode;
 
   /**
    * Heading displayed above the content text. When using the container variant, use it with additional header props. Otherwise, use plain text.
+   * @deprecated Use `header` instead.
    */
   headerText?: React.ReactNode;
 
   /**
    * Supplementary text below the heading. Use with container variant.
+   * @deprecated Use `header` instead.
    */
   headerDescription?: string;
 
   /**
    * Specifies secondary text that's displayed to the right of the heading title. Use with container variant.
    * Behaves similar to the Header component counter.
+   * @deprecated Use `header` instead.
    */
   headerCounter?: string;
 
@@ -70,6 +75,7 @@ export interface ExpandableSectionProps extends BaseComponentProps {
    * Overrides the default [HTML heading tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements).
    * Use with container variant (which defaults to H2) or default/footer variants (which default to DIV). Note that this only
    * works with the `headerText` slot (not with the deprecated `header`), and not with the navigation variant.
+   * @deprecated Use `header` instead.
    */
   headingTagOverride?: ExpandableSectionProps.HeadingTag;
 

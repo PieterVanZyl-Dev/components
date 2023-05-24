@@ -10,6 +10,8 @@ import { HeaderProps } from './interfaces';
 import styles from './styles.css.js';
 import { SomeRequired } from '../internal/types';
 import { useMobile } from '../internal/hooks/use-mobile';
+import ExpandableSectionContext from '../expandable-section/context';
+import ExpandableSectionHeaderButton from '../expandable-section/expandable-section-header-button';
 
 interface InternalHeaderProps extends SomeRequired<HeaderProps, 'variant'>, InternalBaseComponentProps {
   __disableActionsWrapping?: boolean;
@@ -30,6 +32,7 @@ export default function InternalHeader({
   const isMobile = useMobile();
   const HeadingTag = headingTagOverride ?? (variant === 'awsui-h1-sticky' ? 'h1' : variant);
   const { isStuck } = useContext(StickyHeaderContext);
+  const expandableSectionContext = useContext(ExpandableSectionContext);
   const baseProps = getBaseProps(restProps);
   const isRefresh = useVisualRefresh();
   // If is mobile there is no need to have the dynamic variant because it's scrolled out of view
@@ -65,7 +68,11 @@ export default function InternalHeader({
         >
           <HeadingTag className={clsx(styles.heading, styles[`heading-variant-${variantOverride}`])}>
             <span className={clsx(styles['heading-text'], styles[`heading-text-variant-${variantOverride}`])}>
-              {children}
+              {expandableSectionContext?.onClick ? (
+                <ExpandableSectionHeaderButton {...expandableSectionContext}>{children}</ExpandableSectionHeaderButton>
+              ) : (
+                children
+              )}
             </span>
             {counter !== undefined && <span className={styles.counter}> {counter}</span>}
           </HeadingTag>

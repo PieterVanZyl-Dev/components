@@ -46,6 +46,7 @@
 
 .main {
   @include styles.text-flex-wrapping;
+  overflow: visible; // Prevent outline of clickable area from being cut off
   :not(.root-no-actions) > & {
     margin-right: awsui.$space-xs;
   }

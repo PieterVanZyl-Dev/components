@@ -5,6 +5,9 @@ import ExpandableSection from '~components/expandable-section';
 import SpaceBetween from '~components/space-between';
 
 import ScreenshotArea from '../utils/screenshot-area';
+import Link from '~components/link';
+import Button from '~components/button';
+import Header from '~components/header';
 
 export default function SimpleContainers() {
   const [expanded, setExpanded] = useState(false);
@@ -49,8 +52,45 @@ export default function SimpleContainers() {
         <h2>Container</h2>
         <SpaceBetween size="xs">
           <ExpandableSection
-            headerText={'Header component'}
+            header={<Header counter={'(5)'}>Header component</Header>}
             headerCounter={'(5)'}
+            variant="container"
+            defaultExpanded={true}
+          >
+            Verify or edit the settings below.
+          </ExpandableSection>
+          <ExpandableSection
+            header={
+              <Header counter={'(5)'} info={<Link variant="info">info</Link>}>
+                Header component
+              </Header>
+            }
+            variant="container"
+            defaultExpanded={true}
+          >
+            Verify or edit the settings below.
+          </ExpandableSection>
+          <ExpandableSection
+            header={
+              <Header counter={'(5)'} actions={<Button>Create Resource</Button>}>
+                Header component
+              </Header>
+            }
+            variant="container"
+            defaultExpanded={true}
+          >
+            Verify or edit the settings below.
+          </ExpandableSection>
+          <ExpandableSection
+            header={
+              <Header
+                counter={'(5)'}
+                info={<Link variant="info">info</Link>}
+                actions={<Button>Create Resource</Button>}
+              >
+                Header component
+              </Header>
+            }
             variant="container"
             defaultExpanded={true}
           >
