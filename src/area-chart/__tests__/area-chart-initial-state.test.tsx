@@ -6,11 +6,12 @@ import { AreaChartWrapper } from '../../../lib/components/test-utils/dom';
 import AreaChart, { AreaChartProps } from '../../../lib/components/area-chart';
 import { KeyCode } from '@cloudscape-design/test-utils-core/dist/utils';
 import popoverStyles from '../../../lib/components/popover/styles.css.js';
-import { warnOnce } from '../../../lib/components/internal/logging';
+import { warnOnce } from '@cloudscape-design/component-toolkit/internal';
 import { cloneDeep } from 'lodash';
 import '../../__a11y__/to-validate-a11y';
 
-jest.mock('../../../lib/components/internal/logging', () => ({
+jest.mock('@cloudscape-design/component-toolkit/internal', () => ({
+  ...jest.requireActual('@cloudscape-design/component-toolkit/internal'),
   warnOnce: jest.fn(),
 }));
 

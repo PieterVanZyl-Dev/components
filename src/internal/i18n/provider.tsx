@@ -6,7 +6,7 @@ import IntlMessageFormat from 'intl-messageformat';
 import { MessageFormatElement } from '@formatjs/icu-messageformat-parser';
 
 import { InternalI18nContext, FormatFunction, CustomHandler } from './context';
-import { warnOnce } from '../logging';
+import { warnOnce } from '@cloudscape-design/component-toolkit/internal';
 
 export interface I18nProviderProps {
   messages: ReadonlyArray<I18nProviderProps.Messages>;

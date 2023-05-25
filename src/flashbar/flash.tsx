@@ -7,8 +7,7 @@ import InternalIcon from '../icon/internal';
 import clsx from 'clsx';
 import styles from './styles.css.js';
 import { InternalButton } from '../button/internal';
-import { warnOnce } from '../internal/logging';
-import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
+import { warnOnce } from '@cloudscape-design/component-toolkit/internal';
 import { throttle } from '../internal/utils/throttle';
 import LiveRegion from '../internal/components/live-region';
 import { ButtonProps } from '../button/interfaces';
@@ -88,20 +87,18 @@ export const Flash = React.forwardRef(
     }: FlashProps,
     ref: React.Ref<HTMLDivElement>
   ) => {
-    if (isDevelopment) {
-      if (buttonText && !onButtonClick) {
-        warnOnce(
-          'Flashbar',
-          `You provided a \`buttonText\` prop without an \`onButtonClick\` handler. This will render a non-interactive action button.`
-        );
-      }
+    if (buttonText && !onButtonClick) {
+      warnOnce(
+        'Flashbar',
+        `You provided a \`buttonText\` prop without an \`onButtonClick\` handler. This will render a non-interactive action button.`
+      );
+    }
 
-      if (dismissible && !onDismiss) {
-        warnOnce(
-          'Flashbar',
-          `You have set the \`dismissible\` prop without an \`onDismiss\` handler. This will render a non-interactive dismiss button.`
-        );
-      }
+    if (dismissible && !onDismiss) {
+      warnOnce(
+        'Flashbar',
+        `You have set the \`dismissible\` prop without an \`onDismiss\` handler. This will render a non-interactive dismiss button.`
+      );
     }
 
     const button = action || (buttonText && actionButton(buttonText, onButtonClick));

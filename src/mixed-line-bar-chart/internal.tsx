@@ -9,7 +9,6 @@ import InternalBox from '../box/internal';
 import ChartStatusContainer, { getChartStatus } from '../internal/components/chart-status-container';
 import { useControllable } from '../internal/hooks/use-controllable';
 import { usePrevious } from '../internal/hooks/use-previous';
-import { warnOnce } from '../internal/logging';
 
 import { ChartDataTypes, MixedLineBarChartProps } from './interfaces';
 import InternalChartFilters from './chart-filters';
@@ -18,7 +17,7 @@ import ChartContainer from './chart-container';
 import cartesianStyles from '../internal/components/cartesian-chart/styles.css.js';
 import styles from './styles.css.js';
 import { InternalBaseComponentProps } from '../internal/hooks/use-base-component';
-import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
+import { isDevelopment, warnOnce } from '@cloudscape-design/component-toolkit/internal';
 import createCategoryColorScale from '../internal/utils/create-category-color-scale';
 import { ScaledPoint } from './make-scaled-series';
 import { useMergeRefs } from '../internal/hooks/use-merge-refs';

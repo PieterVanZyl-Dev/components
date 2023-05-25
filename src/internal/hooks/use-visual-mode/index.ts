@@ -5,8 +5,7 @@ import { ALWAYS_VISUAL_REFRESH } from '../../environment';
 import { isMotionDisabled } from '../../motion';
 import { findUpUntil } from '../../utils/dom';
 import { useMutationObserver } from '../use-mutation-observer';
-import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
-import { warnOnce } from '../../logging';
+import { isDevelopment, warnOnce } from '@cloudscape-design/component-toolkit/internal';
 
 export function useCurrentMode(elementRef: React.RefObject<HTMLElement>) {
   const [value, setValue] = useState<'light' | 'dark'>('light');

@@ -6,8 +6,7 @@ import styles from './styles.css.js';
 import { OptionProps } from './interfaces';
 import { Label, LabelTag, Description, Tags, FilteringTags, OptionIcon } from './option-parts';
 import { getBaseProps } from '../../base-component';
-import { warnOnce } from '../../logging';
-import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
+import { isDevelopment, warnOnce } from '@cloudscape-design/component-toolkit/internal';
 
 export { OptionProps };
 

@@ -8,8 +8,7 @@ import styles from './styles.css.js';
 import InternalHeader from '../header/internal';
 import ScreenreaderOnly from '../internal/components/screenreader-only';
 import { useUniqueId } from '../internal/hooks/use-unique-id';
-import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
-import { warnOnce } from '../internal/logging';
+import { warnOnce } from '@cloudscape-design/component-toolkit/internal';
 
 interface ExpandableDefaultHeaderProps {
   id: string;
@@ -228,7 +227,7 @@ export const ExpandableSectionHeader = ({
     );
   }
 
-  if (variant === 'container' && header && isDevelopment) {
+  if (variant === 'container' && header) {
     warnOnce(
       'ExpandableSection',
       'Use `headerText` instead of `header` to provide the button within the heading for a11y.'

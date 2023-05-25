@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 
-import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
+import { warnOnce } from '@cloudscape-design/component-toolkit/internal';
 import { getBaseProps } from '../internal/base-component';
 import InternalBox from '../box/internal';
 import ChartStatusContainer, { getChartStatus } from '../internal/components/chart-status-container';
@@ -20,7 +20,6 @@ import useChartModel from './model/use-chart-model';
 import useFilterProps from './model/use-filter-props';
 import useHighlightProps from './model/use-highlight-props';
 import { isSeriesValid } from './model/utils';
-import { warnOnce } from '../internal/logging';
 import { nodeContains } from '../internal/utils/dom';
 import { useMergeRefs } from '../internal/hooks/use-merge-refs';
 import { SomeRequired } from '../internal/types';
@@ -67,18 +66,15 @@ export default function InternalAreaChart<T extends AreaChartProps.DataTypes>({
   const containerRef = useRef<HTMLDivElement>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
 
-  if (isDevelopment) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-      if (!isSeriesValid(externalSeries)) {
-        warnOnce(
-          'AreaChart',
-          "The `series` property violates the component's constraints: all `area` " +
-            'series must have `data` arrays of the same length and with the same x-values.'
-        );
-      }
-    }, [externalSeries]);
-  }
+  useEffect(() => {
+    if (!isSeriesValid(externalSeries)) {
+      warnOnce(
+        'AreaChart',
+        "The `series` property violates the component's constraints: all `area` " +
+          'series must have `data` arrays of the same length and with the same x-values.'
+      );
+    }
+  }, [externalSeries]);
 
   const [width, setWidth] = useState(0);
   const [visibleSeries, setVisibleSeries] = useFilterProps(

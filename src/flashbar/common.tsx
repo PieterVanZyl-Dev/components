@@ -8,8 +8,7 @@ import { useReducedMotion, useVisualRefresh } from '../internal/hooks/use-visual
 import { getBaseProps } from '../internal/base-component';
 import { FlashbarProps } from './interfaces';
 import { focusFlashById } from './flash';
-import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
-import { warnOnce } from '../internal/logging';
+import { warnOnce } from '@cloudscape-design/component-toolkit/internal';
 
 export const componentName = 'Flashbar';
 
@@ -36,13 +35,11 @@ export function useFlashbar({
   const [previousItems, setPreviousItems] = useState<ReadonlyArray<FlashbarProps.MessageDefinition>>(items);
   const [nextFocusId, setNextFocusId] = useState<string | null>(null);
 
-  if (isDevelopment) {
-    if (items?.some(item => item.ariaRole === 'alert' && !item.id)) {
-      warnOnce(
-        'Flashbar',
-        `You provided \`ariaRole="alert"\` for a flashbar item without providing an \`id\`. Focus will not be moved to the newly added flash message.`
-      );
-    }
+  if (items?.some(item => item.ariaRole === 'alert' && !item.id)) {
+    warnOnce(
+      'Flashbar',
+      `You provided \`ariaRole="alert"\` for a flashbar item without providing an \`id\`. Focus will not be moved to the newly added flash message.`
+    );
   }
 
   // Track new or removed item IDs in state to only trigger focus changes for newly added items.

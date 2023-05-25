@@ -18,7 +18,7 @@ import { DrawersProps } from './drawers';
 import { fireNonCancelableEvent } from '../../internal/events';
 import { FocusControlRefs, useFocusControl } from '../utils/use-focus-control';
 import { getSplitPanelDefaultSize } from '../../split-panel/utils/size-utils';
-import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
+import { warnOnce } from '@cloudscape-design/component-toolkit/internal';
 import { getSplitPanelPosition } from './split-panel';
 import { useContainerQuery } from '../../internal/hooks/container-queries';
 import { useControllable } from '../../internal/hooks/use-controllable';
@@ -26,7 +26,6 @@ import { SplitPanelFocusControlRefs, useSplitPanelFocusControl } from '../utils/
 import { SplitPanelSideToggleProps } from '../../internal/context/split-panel-context';
 import { useObservedElement } from '../utils/use-observed-element';
 import { useMobile } from '../../internal/hooks/use-mobile';
-import { warnOnce } from '../../internal/logging';
 import styles from './styles.css.js';
 
 interface AppLayoutInternals extends AppLayoutProps {
@@ -115,13 +114,11 @@ export const AppLayoutInternalsProvider = React.forwardRef(
   ) => {
     const isMobile = useMobile();
 
-    if (isDevelopment) {
-      if (controlledToolsOpen && toolsHide) {
-        warnOnce(
-          'AppLayout',
-          `You have enabled both the \`toolsOpen\` prop and the \`toolsHide\` prop. This is not supported. Set \`toolsOpen\` to \`false\` when you set \`toolsHide\` to \`true\`.`
-        );
-      }
+    if (controlledToolsOpen && toolsHide) {
+      warnOnce(
+        'AppLayout',
+        `You have enabled both the \`toolsOpen\` prop and the \`toolsHide\` prop. This is not supported. Set \`toolsOpen\` to \`false\` when you set \`toolsHide\` to \`true\`.`
+      );
     }
 
     /**

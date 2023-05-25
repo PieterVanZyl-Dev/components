@@ -40,8 +40,7 @@ import { DrawerItem, InternalDrawerProps } from './drawer/interfaces';
 import { togglesConfig } from './toggles';
 import { SideSplitPanelDrawer } from './split-panel-drawer';
 import useAppLayoutOffsets from './utils/use-content-width';
-import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
-import { warnOnce } from '../internal/logging';
+import { warnOnce } from '@cloudscape-design/component-toolkit/internal';
 
 import RefreshedAppLayout from './visual-refresh';
 import { useInternalI18n } from '../internal/i18n/context';
@@ -120,13 +119,11 @@ const OldAppLayout = React.forwardRef(
     }: AppLayoutProps,
     ref: React.Ref<AppLayoutProps.Ref>
   ) => {
-    if (isDevelopment) {
-      if (controlledToolsOpen && toolsHide) {
-        warnOnce(
-          'AppLayout',
-          `You have enabled both the \`toolsOpen\` prop and the \`toolsHide\` prop. This is not supported. Set \`toolsOpen\` to \`false\` when you set \`toolsHide\` to \`true\`.`
-        );
-      }
+    if (controlledToolsOpen && toolsHide) {
+      warnOnce(
+        'AppLayout',
+        `You have enabled both the \`toolsOpen\` prop and the \`toolsHide\` prop. This is not supported. Set \`toolsOpen\` to \`false\` when you set \`toolsHide\` to \`true\`.`
+      );
     }
 
     const drawers = (props as InternalDrawerProps).drawers;
