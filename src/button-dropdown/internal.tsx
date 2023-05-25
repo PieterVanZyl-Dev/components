@@ -88,9 +88,9 @@ const InternalButtonDropdown = React.forwardRef(
 
     const canBeOpened = !loading && !disabled;
 
-    const triggerVariant = variant === 'navigation' ? undefined : variant;
+    const triggerVariant = variant === 'navigation' ? undefined : variant === 'icon-action' ? 'inline-icon' : variant;
     const iconProps: Partial<ButtonProps & { __iconClass?: string }> =
-      variant === 'icon'
+      variant === 'icon' || variant === 'icon-action'
         ? {
             iconName: 'ellipsis',
           }

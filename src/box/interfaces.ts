@@ -153,7 +153,26 @@ export namespace BoxProps {
     | 'text-status-success'
     | 'text-status-info'
     | 'text-status-inactive';
-  export type SpacingSize = 'n' | 'xxxs' | 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl' | 'xxxl';
+  export type SpacingSize =
+    | 'n'
+    | 'xxxs'
+    | 'xxs'
+    | 'xs'
+    | 's'
+    | 'm'
+    | 'l'
+    | 'xl'
+    | 'xxl'
+    | 'xxxl'
+    | '-xxxs'
+    | '-xxs'
+    | '-xs'
+    | '-s'
+    | '-m'
+    | '-l'
+    | '-xl'
+    | '-xxl'
+    | '-xxxl';
   export interface Spacing {
     top?: BoxProps.SpacingSize;
     right?: BoxProps.SpacingSize;

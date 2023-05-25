@@ -59,9 +59,9 @@ const columnDefinitionsDropdown: TableProps.ColumnDefinition<Instance>[] = [
     id: 'action',
     header: 'Actions',
     cell: item => (
-      <Box textAlign="center">
+      <Box>
         <ButtonDropdown
-          variant="icon"
+          variant="icon-action"
           expandToViewport={true}
           ariaLabel={`${item.id} actions`}
           items={[
@@ -88,7 +88,7 @@ const columnDefinitionsMixed: TableProps.ColumnDefinition<Instance>[] = [
         </Button>
         <Box variant="awsui-separator" />
         <ButtonDropdown
-          variant="icon"
+          variant="icon-action"
           expandToViewport={true}
           ariaLabel={`${item.id} actions`}
           items={[
@@ -103,6 +103,32 @@ const columnDefinitionsMixed: TableProps.ColumnDefinition<Instance>[] = [
     ),
   },
 ];
+const columnDefinitionsOnlyIcons: TableProps.ColumnDefinition<Instance>[] = [
+  ...columnsConfig,
+  {
+    id: 'action',
+    header: 'Actions',
+    cell: item => (
+      <Box>
+        <SpaceBetween size="s" direction="horizontal">
+          <Button variant="inline-icon" iconName="download" ariaLabel={`Download ${item.id}`} />
+          <ButtonDropdown
+            variant="icon-action"
+            expandToViewport={true}
+            ariaLabel={`${item.id} actions`}
+            items={[
+              { id: 'share', text: 'Share' },
+              { id: 'edit', text: 'Edit' },
+              { id: 'delete', text: 'Delete' },
+              { id: 'connect', text: 'Connect' },
+              { id: 'manage', text: 'Manage state' },
+            ]}
+          />
+        </SpaceBetween>
+      </Box>
+    ),
+  },
+];
 
 export default function () {
   return (
@@ -114,21 +140,31 @@ export default function () {
             header={<Header>Table with single actions</Header>}
             columnDefinitions={columnDefinitionsSingle}
             items={items}
+            resizableColumns={true}
           />
           <Table
             header={<Header>Table with multiple actions</Header>}
             columnDefinitions={columnDefinitionsMultiple}
             items={items}
+            resizableColumns={true}
           />
           <Table
             header={<Header>Table with action dropdowns</Header>}
             columnDefinitions={columnDefinitionsDropdown}
             items={items}
+            resizableColumns={true}
           />
           <Table
             header={<Header>Table with mixed actions</Header>}
             columnDefinitions={columnDefinitionsMixed}
             items={items}
+            resizableColumns={true}
+          />
+          <Table
+            header={<Header>Table with only icon actions</Header>}
+            columnDefinitions={columnDefinitionsOnlyIcons}
+            items={items}
+            resizableColumns={true}
           />
         </SpaceBetween>
       </Box>

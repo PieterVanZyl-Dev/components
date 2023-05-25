@@ -19,6 +19,15 @@ $size-prefixes-horizontal: (
   'xl': awsui.$space-xl,
   'xxl': awsui.$space-xxl,
   'xxxl': awsui.$space-xxxl,
+  '-xxxs': calc(#{awsui.$space-xxxs} * -1),
+  '-xxs': calc(#{awsui.$space-xxs} * -1),
+  '-xs': calc(#{awsui.$space-xs} * -1),
+  '-s': calc(#{awsui.$space-s} * -1),
+  '-m': calc(#{awsui.$space-m} * -1),
+  '-l': calc(#{awsui.$space-l} * -1),
+  '-xl': calc(#{awsui.$space-xl} * -1),
+  '-xxl': calc(#{awsui.$space-xxl} * -1),
+  '-xxxl': calc(#{awsui.$space-xxxl} * -1),
 );
 
 $size-prefixes-vertical: (
@@ -32,6 +41,15 @@ $size-prefixes-vertical: (
   'xl': awsui.$space-scaled-xl,
   'xxl': awsui.$space-scaled-xxl,
   'xxxl': awsui.$space-scaled-xxxl,
+  '-xxxs': calc(#{awsui.$space-scaled-xxxs} * -1),
+  '-xxs': calc(#{awsui.$space-scaled-xxs} * -1),
+  '-xs': calc(#{awsui.$space-scaled-xs} * -1),
+  '-s': calc(#{awsui.$space-scaled-s} * -1),
+  '-m': calc(#{awsui.$space-scaled-m} * -1),
+  '-l': calc(#{awsui.$space-scaled-l} * -1),
+  '-xl': calc(#{awsui.$space-scaled-xl} * -1),
+  '-xxl': calc(#{awsui.$space-scaled-xxl} * -1),
+  '-xxxl': calc(#{awsui.$space-scaled-xxxl} * -1),
 );
 
 $side-suffixes: (
@@ -43,7 +61,8 @@ $side-suffixes: (
 
 $sides: (('top', 'vertical'), ('right', 'horizontal'), ('bottom', 'vertical'), ('left', 'horizontal'));
 
-$prefixes: 'n', 'xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl';
+$prefixes: 'n', 'xxxs', 'xxs', 'xs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', '-xxxs', '-xxs', '-xs', '-s', '-m', '-l', '-xl',
+  '-xxl', '-xxxl';
 
 @mixin create-spacing($name, $css_property, $parent-selector) {
   @each $p in $prefixes {
