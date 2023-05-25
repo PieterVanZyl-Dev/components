@@ -8,7 +8,7 @@ import { useReducedMotion, useVisualRefresh } from '../internal/hooks/use-visual
 import { getBaseProps } from '../internal/base-component';
 import { FlashbarProps } from './interfaces';
 import { focusFlashById } from './flash';
-import { isDevelopment } from '../internal/is-development';
+import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
 import { warnOnce } from '../internal/logging';
 
 export const componentName = 'Flashbar';

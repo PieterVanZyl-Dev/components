@@ -1,6 +1,6 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import { isDevelopment } from './is-development';
+import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
 
 const messageCache: Record<string, true | undefined> = {};
 

@@ -8,7 +8,7 @@ import styles from './styles.css.js';
 import InternalHeader from '../header/internal';
 import ScreenreaderOnly from '../internal/components/screenreader-only';
 import { useUniqueId } from '../internal/hooks/use-unique-id';
-import { isDevelopment } from '../internal/is-development';
+import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
 import { warnOnce } from '../internal/logging';
 
 interface ExpandableDefaultHeaderProps {

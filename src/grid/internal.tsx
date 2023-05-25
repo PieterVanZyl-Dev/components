@@ -5,7 +5,7 @@ import clsx, { ClassValue } from 'clsx';
 import flattenChildren from 'react-keyed-flatten-children';
 import { getBaseProps } from '../internal/base-component';
 import { Breakpoint, matchBreakpointMapping } from '../internal/breakpoints';
-import { isDevelopment } from '../internal/is-development';
+import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
 import * as logging from '../internal/logging';
 import styles from './styles.css.js';
 import { GridProps } from './interfaces';

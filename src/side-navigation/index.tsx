@@ -8,7 +8,7 @@ import { SideNavigationProps } from './interfaces';
 import { Header, NavigationItemsList } from './internal';
 import { generateExpandableItemsMapping, checkDuplicateHrefs } from './util';
 import styles from './styles.css.js';
-import { isDevelopment } from '../internal/is-development';
+import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
 import { applyDisplayName } from '../internal/utils/apply-display-name';
 import useBaseComponent from '../internal/hooks/use-base-component';
 

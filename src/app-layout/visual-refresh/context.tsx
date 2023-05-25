@@ -18,7 +18,7 @@ import { DrawersProps } from './drawers';
 import { fireNonCancelableEvent } from '../../internal/events';
 import { FocusControlRefs, useFocusControl } from '../utils/use-focus-control';
 import { getSplitPanelDefaultSize } from '../../split-panel/utils/size-utils';
-import { isDevelopment } from '../../internal/is-development';
+import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
 import { getSplitPanelPosition } from './split-panel';
 import { useContainerQuery } from '../../internal/hooks/container-queries';
 import { useControllable } from '../../internal/hooks/use-controllable';

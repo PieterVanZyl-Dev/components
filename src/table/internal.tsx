@@ -17,7 +17,7 @@ import { checkSortingState, getColumnKey, getItemKey, getVisibleColumnDefinition
 import { useRowEvents } from './use-row-events';
 import { focusMarkers, useFocusMove, useSelection } from './use-selection';
 import { fireCancelableEvent, fireNonCancelableEvent } from '../internal/events';
-import { isDevelopment } from '../internal/is-development';
+import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
 import { checkColumnWidths, ColumnWidthsProvider, DEFAULT_WIDTH } from './use-column-widths';
 import { useScrollSync } from '../internal/hooks/use-scroll-sync';
 import { ResizeTracker } from './resizer';

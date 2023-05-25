@@ -40,7 +40,7 @@ import { DrawerItem, InternalDrawerProps } from './drawer/interfaces';
 import { togglesConfig } from './toggles';
 import { SideSplitPanelDrawer } from './split-panel-drawer';
 import useAppLayoutOffsets from './utils/use-content-width';
-import { isDevelopment } from '../internal/is-development';
+import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
 import { warnOnce } from '../internal/logging';
 
 import RefreshedAppLayout from './visual-refresh';

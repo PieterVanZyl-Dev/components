@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import styles from './styles.css.js';
 import { InternalButton } from '../button/internal';
 import { warnOnce } from '../internal/logging';
-import { isDevelopment } from '../internal/is-development';
+import { isDevelopment } from '@cloudscape-design/component-toolkit/internal';
 import { throttle } from '../internal/utils/throttle';
 import LiveRegion from '../internal/components/live-region';
 import { ButtonProps } from '../button/interfaces';
