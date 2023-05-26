@@ -14,7 +14,7 @@ export function setFunnelMetrics(funnelMetrics: IFunnelMetrics) {
  */
 export let FunnelMetrics: IFunnelMetrics = {
   funnelStart(): string {
-    return '';
+    return 'mocked-funnel';
   },
 
   funnelError(): void {},

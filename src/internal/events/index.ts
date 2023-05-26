@@ -75,6 +75,7 @@ export function fireCancelableEvent<T>(
   if (event.cancelBubble && sourceEvent) {
     sourceEvent.stopPropagation();
   }
+
   return event.defaultPrevented;
 }
 

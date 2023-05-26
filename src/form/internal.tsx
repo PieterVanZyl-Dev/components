@@ -1,6 +1,6 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { getBaseProps } from '../internal/base-component';
 import InternalAlert from '../alert/internal';
@@ -31,7 +31,9 @@ export default function InternalForm({
   const baseProps = getBaseProps(props);
   const i18n = useInternalI18n('form');
   const errorIconAriaLabel = i18n('errorIconAriaLabel', errorIconAriaLabelOverride);
-  const { funnelInteractionId, funnelProps } = useFunnel();
+  const actionsRef = useRef<HTMLDivElement>(null);
+
+  const { funnelInteractionId, funnelProps, funnelSubmit } = useFunnel();
   const { funnelStepProps } = useFunnelStep();
 
   useEffect(() => {
@@ -39,6 +41,28 @@ export default function InternalForm({
       FunnelMetrics.funnelError({ funnelInteractionId });
     }
   }, [funnelInteractionId, errorText]);
+
+  useEffect(() => {
+    const currentActionsRef = actionsRef.current;
+
+    const handleClick = (event: Event) => {
+      const customEvent = event as CustomEvent;
+
+      if (!funnelInteractionId) {
+        return;
+      }
+
+      if (customEvent.detail.variant === 'primary') {
+        funnelSubmit();
+      }
+    };
+
+    currentActionsRef?.addEventListener('button:click', handleClick);
+
+    return () => {
+      currentActionsRef?.removeEventListener('button:click', handleClick);
+    };
+  }, [funnelInteractionId, funnelSubmit]);
 
   return (
     <div
@@ -65,7 +89,11 @@ export default function InternalForm({
         {(actions || secondaryActions) && (
           <div className={styles.footer}>
             <div className={styles['actions-section']}>
-              {actions && <div className={styles.actions}>{actions}</div>}
+              {actions && (
+                <div ref={actionsRef} className={styles.actions}>
+                  {actions}
+                </div>
+              )}
               {secondaryActions && <div className={styles['secondary-actions']}>{secondaryActions}</div>}
             </div>
           </div>

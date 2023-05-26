@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import clsx from 'clsx';
-import React, { useCallback, useRef } from 'react';
+import React, { useRef } from 'react';
 import { fireCancelableEvent, isPlainLeftClick } from '../internal/events';
 import useForwardFocus from '../internal/hooks/forward-focus';
 import styles from './styles.css.js';
@@ -11,7 +11,6 @@ import { InternalBaseComponentProps } from '../internal/hooks/use-base-component
 import { checkSafeUrl } from '../internal/utils/check-safe-url';
 import { useMergeRefs } from '../internal/hooks/use-merge-refs';
 import LiveRegion from '../internal/components/live-region';
-import { useFunnel } from '../internal/analytics/hooks/use-funnel';
 
 type InternalButtonProps = Omit<ButtonProps, 'variant'> & {
   variant?: ButtonProps['variant'] | 'flashbar-icon' | 'breadcrumb-group' | 'menu-trigger' | 'modal-dismiss';
@@ -61,27 +60,25 @@ export const InternalButton = React.forwardRef(
     const buttonRef = useRef<HTMLElement>(null);
     useForwardFocus(ref, buttonRef);
 
-    const { funnelInteractionId, funnelSubmit } = useFunnel();
+    const handleClick = (event: React.MouseEvent) => {
+      if (isNotInteractive) {
+        return event.preventDefault();
+      }
 
-    const handleClick = useCallback(
-      (event: React.MouseEvent) => {
-        if (isNotInteractive) {
-          return event.preventDefault();
-        }
+      if (isAnchor && isPlainLeftClick(event)) {
+        fireCancelableEvent(onFollow, { href, target }, event);
+      }
 
-        if (isAnchor && isPlainLeftClick(event)) {
-          fireCancelableEvent(onFollow, { href, target }, event);
-        }
+      const { altKey, button, ctrlKey, metaKey, shiftKey } = event;
+      fireCancelableEvent(onClick, { altKey, button, ctrlKey, metaKey, shiftKey }, event);
 
-        if (funnelInteractionId && variant === 'primary') {
-          funnelSubmit();
-        }
+      const customEvent = new CustomEvent('button:click', {
+        detail: { component: 'Button', variant },
+        bubbles: true,
+      });
 
-        const { altKey, button, ctrlKey, metaKey, shiftKey } = event;
-        fireCancelableEvent(onClick, { altKey, button, ctrlKey, metaKey, shiftKey }, event);
-      },
-      [isAnchor, isNotInteractive, onClick, onFollow, href, target, funnelInteractionId, variant, funnelSubmit]
-    );
+      buttonRef.current?.dispatchEvent(customEvent);
+    };
 
     const buttonClass = clsx(props.className, styles.button, styles[`variant-${variant}`], {
       [styles.disabled]: isNotInteractive,
