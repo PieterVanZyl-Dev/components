@@ -7,7 +7,7 @@ export interface BoxProps extends BaseComponentProps {
    * Defines the style of element to display.
    *
    * - If you set it to `'div'`, `'span'`, `'h1'`, `'h2'`, `'h3'`, `'h4'`, `'h5'`, `'p'`, `'strong'`, `'small'`, `'code'`, `'pre'`, or `'samp'`, the variant is also used as the HTML tag name.
-   * - If you set it to `awsui-key-label` or `awsui-separator`, the component will display as a `div`.
+   * - If you set it to `awsui-key-label`, the component will display as a `div`.
    * - If you set it to `awsui-value-large`, the component will display as a `span`.
    *
    * Override the HTML tag by using property `tagOverride`.
@@ -129,8 +129,7 @@ export namespace BoxProps {
     | 'pre'
     | 'samp'
     | 'awsui-key-label'
-    | 'awsui-value-large'
-    | 'awsui-separator';
+    | 'awsui-value-large';
 
   export type Display = 'block' | 'inline' | 'inline-block' | 'none';
   export type TextAlign = 'left' | 'center' | 'right';
