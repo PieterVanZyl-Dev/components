@@ -119,9 +119,5 @@ export function TableBodyCell<ItemType>({
     return <TableCellEditable {...rest} />;
   }
   const { column, item } = rest;
-  return (
-    <TableTdElement noPadding={column.noPadding} {...rest}>
-      {column.cell(item)}
-    </TableTdElement>
-  );
+  return <TableTdElement {...rest}>{column.cell(item)}</TableTdElement>;
 }
