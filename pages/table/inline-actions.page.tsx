@@ -45,7 +45,6 @@ const columnDefinitionsMultiple: TableProps.ColumnDefinition<Instance>[] = [
         <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
           Download
         </Button>
-        <Box variant="awsui-separator" />
         <Button variant="inline-action" ariaLabel={`Upload ${item.id}`}>
           Update
         </Button>
@@ -82,11 +81,10 @@ const columnDefinitionsMixed: TableProps.ColumnDefinition<Instance>[] = [
     id: 'action',
     header: 'Actions',
     cell: item => (
-      <SpaceBetween size="m" direction="horizontal">
+      <SpaceBetween size="xs" direction="horizontal">
         <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
           Download
         </Button>
-        <Box variant="awsui-separator" />
         <ButtonDropdown
           variant="icon-action"
           expandToViewport={true}
@@ -110,7 +108,7 @@ const columnDefinitionsOnlyIcons: TableProps.ColumnDefinition<Instance>[] = [
     header: 'Actions',
     cell: item => (
       <Box>
-        <SpaceBetween size="s" direction="horizontal">
+        <SpaceBetween size="xs" direction="horizontal">
           <Button variant="inline-icon" iconName="download" ariaLabel={`Download ${item.id}`} />
           <ButtonDropdown
             variant="icon-action"
