@@ -32,6 +32,7 @@ import styles from './styles.css.js';
 interface AppLayoutInternals extends AppLayoutProps {
   activeDrawerId: string | null;
   activeDrawerWidth: number;
+  setActiveDrawerWidth: (activeDrawerWidth: number) => void;
   drawers: DrawersProps;
   drawersRefs: FocusControlRefs;
   drawersTriggerCount: number;
@@ -279,7 +280,7 @@ export const AppLayoutInternalsProvider = React.forwardRef(
      * a forced position on the bottom.
      */
     const splitPanelMinWidth = 280;
-    const [splitPanelMaxWidth, setSplitPanelMaxWidth] = useState(splitPanelMinWidth);
+    const [splitPanelMaxWidth, setSplitPanelMaxWidth] = useState(20000);
 
     /**
      * The useControllable hook will set the default value and manage either
@@ -417,7 +418,7 @@ export const AppLayoutInternalsProvider = React.forwardRef(
       changeHandler: 'onChange',
     });
 
-    const activeDrawerWidth = 290;
+    const [activeDrawerWidth, setActiveDrawerWidth] = useState(290);
 
     const { refs: drawersRefs, setFocus: focusDrawersButtons } = useFocusControl(activeDrawerId);
 
@@ -566,6 +567,7 @@ export const AppLayoutInternalsProvider = React.forwardRef(
           ...props,
           activeDrawerId,
           activeDrawerWidth,
+          setActiveDrawerWidth,
           contentType,
           drawers,
           drawersRefs,

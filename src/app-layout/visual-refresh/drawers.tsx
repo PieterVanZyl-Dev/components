@@ -12,6 +12,7 @@ import { useAppLayoutInternals } from './context';
 import splitPanelStyles from '../../split-panel/styles.css.js';
 import styles from './styles.css.js';
 import testutilStyles from '../test-classes/styles.css.js';
+import ResizeHandler from '../../split-panel/icons/resize-handler';
 
 export interface DrawersProps {
   activeDrawerId?: string;
@@ -76,6 +77,47 @@ export default function Drawers() {
   );
 }
 
+function usePointerEvents(
+  drawerRefObject: React.RefObject<HTMLDivElement>,
+  setSidePanelWidth: (width: number) => void
+) {
+  const onDocumentPointerMove = (event: PointerEvent) => {
+    if (!drawerRefObject || !drawerRefObject.current) {
+      return;
+    }
+
+    const mouseClientX = event.clientX;
+    const width = drawerRefObject.current.getBoundingClientRect().right - mouseClientX;
+
+    setSidePanelWidth(width);
+  };
+
+  const onDocumentPointerUp = () => {
+    document.removeEventListener('pointerup', onDocumentPointerUp);
+    document.removeEventListener('pointermove', onDocumentPointerMove);
+  };
+
+  const onSliderPointerDown = () => {
+    document.addEventListener('pointerup', onDocumentPointerUp);
+    document.addEventListener('pointermove', onDocumentPointerMove);
+  };
+
+  return onSliderPointerDown;
+}
+
+function getLimitedValue(min: number, value: number, max: number) {
+  if (min > max) {
+    return min;
+  }
+  if (value < min) {
+    return min;
+  }
+  if (value > max) {
+    return max;
+  }
+  return value;
+}
+
 /**
  * The ActiveDrawer component will render either the drawer content that corresponds
  * to the activeDrawerId or the Tools content if it exists and isToolsOpen is true.
@@ -86,6 +128,7 @@ function ActiveDrawer() {
   const {
     activeDrawerId,
     activeDrawerWidth,
+    setActiveDrawerWidth,
     ariaLabels,
     drawers,
     drawersRefs,
@@ -110,8 +153,49 @@ function ActiveDrawer() {
   const isHidden = !activeDrawerId && !isToolsOpen;
   const isUnfocusable = isHidden || (hasDrawerViewportOverlay && isNavigationOpen && !navigationHide);
 
+  const drawerRefObject = useRef<HTMLDivElement>(null);
+  //const handleRef = useRef<HTMLDivElement>(null);
+
+  const MIN_WIDTH = 290;
+
+  const setSidePanelWidth = (width: number) => {
+    const maxWidth = 700;
+    const size = getLimitedValue(MIN_WIDTH, width, maxWidth);
+
+    if (!activeDrawerId) {
+      setActiveDrawerWidth(0);
+    }
+
+    setActiveDrawerWidth(size);
+  };
+
+  const resizeHandle = (
+    <div
+      //ref={handleRef}
+      role="slider"
+      tabIndex={0}
+      aria-label={activeDrawer?.ariaLabels?.resizeHandle}
+      aria-valuemax={100}
+      aria-valuemin={0}
+      //aria-valuenow={relativeSize}
+      className={clsx(testutilStyles['drawers-slider'])}
+      // onKeyDown={onKeyDown}
+      onPointerDown={usePointerEvents(drawerRefObject, setSidePanelWidth)}
+      style={{ cursor: 'ew-resize' }}
+    >
+      <ResizeHandler className={clsx(splitPanelStyles['slider-icon'], splitPanelStyles[`slider-icon-side`])} />
+    </div>
+  );
+
+  console.log(activeDrawerWidth);
+
+  if (isHidden) {
+    return null;
+  }
+
   return (
     <aside
+      ref={drawerRefObject}
       aria-hidden={isHidden}
       aria-label={computedAriaLabels.content}
       className={clsx(styles.drawer, {
@@ -123,7 +207,12 @@ function ActiveDrawer() {
       style={{
         ...(!isMobile && activeDrawerWidth && { [customCssProps.activeDrawerWidth]: `${activeDrawerWidth}px` }),
       }}
+
+      // style={{
+      //   width: activeDrawerWidth,
+      // }}
     >
+      {!isMobile && <div className={styles['drawer-slider']}>{resizeHandle}</div>}
       <div className={clsx(styles['drawer-close-button'])}>
         <InternalButton
           ariaLabel={computedAriaLabels.closeButton}

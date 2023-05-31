@@ -139,7 +139,12 @@ export default function WithDrawers() {
 }
 
 function Info() {
-  return <HelpPanel header={<h2>Info</h2>}>Here is some info for you!</HelpPanel>;
+  return (
+    <HelpPanel header={<h2>Info</h2>}>
+      Here is some info for you!Here is some info for you!Here is some info for you!Here is some info for you!Here is
+      some info for you!
+    </HelpPanel>
+  );
 }
 
 function Security() {
