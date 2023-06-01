@@ -50,7 +50,7 @@ export namespace SplitPanelProps {
 
 export interface SizeControlProps {
   position: 'side' | 'bottom';
-  splitPanelRef?: React.RefObject<HTMLDivElement>;
+  panelRef?: React.RefObject<HTMLDivElement>;
   handleRef?: React.RefObject<HTMLDivElement>;
   setSidePanelWidth: (width: number) => void;
   setBottomPanelHeight: (height: number) => void;
