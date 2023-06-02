@@ -1,28 +1,29 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import React, { useContext } from 'react';
+import clsx from 'clsx';
 import AppContext, { AppContextType } from '../app/app-context';
-import Container from '~components/container';
-import Header from '~components/header';
-import SpaceBetween from '~components/space-between';
-import Input from '~components/input';
-import ColumnLayout from '~components/column-layout';
-import Box from '~components/box';
-import Link from '~components/link';
-import Badge from '~components/badge';
-import Button from '~components/button';
-import FormField from '~components/form-field';
-import RadioGroup from '~components/radio-group';
-import ExpandableSection from '~components/expandable-section';
-import { ContainerProps } from '~components/container';
 import { BREAKPOINT_MAPPING } from '~components/internal/breakpoints';
+import { ContainerProps } from '~components/container';
+import Badge from '~components/badge';
+import Box from '~components/box';
+import Button from '~components/button';
+import ColumnLayout from '~components/column-layout';
+import Container from '~components/container';
+import ExpandableSection from '~components/expandable-section';
+import FormField from '~components/form-field';
+import Header from '~components/header';
+import Input from '~components/input';
+import Link from '~components/link';
+import RadioGroup from '~components/radio-group';
 import ScreenshotArea from '../utils/screenshot-area';
-import styles from './media.scss';
+import SpaceBetween from '~components/space-between';
 import image169 from './images/16-9.png';
 import image43 from './images/4-3.png';
 import image916 from './images/9-16.png';
 import imageVideo from './images/video.png';
-import clsx from 'clsx';
+import styles from './media.scss';
+
 type DemoContext = React.Context<AppContextType<{ [key: string]: string }>>;
 
 function ContainerPlayground(props: ContainerProps & { mediaContent: React.ReactNode }) {
@@ -50,14 +51,14 @@ function ContainerPlayground(props: ContainerProps & { mediaContent: React.React
           l: urlParams.lHeight,
           xl: urlParams.xlHeight,
         },
-        orientation: {
-          default: urlParams.defaultOrientation as 'horizontal' | 'vertical',
-          xxs: urlParams.xxsOrientation as 'horizontal' | 'vertical',
-          xs: urlParams.xsOrientation as 'horizontal' | 'vertical',
-          s: urlParams.sOrientation as 'horizontal' | 'vertical',
-          m: urlParams.mOrientation as 'horizontal' | 'vertical',
-          l: urlParams.lOrientation as 'horizontal' | 'vertical',
-          xl: urlParams.xlOrientation as 'horizontal' | 'vertical',
+        position: {
+          default: urlParams.defaultPosition as 'top' | 'side',
+          xxs: urlParams.xxsPosition as 'top' | 'side',
+          xs: urlParams.xsPosition as 'top' | 'side',
+          s: urlParams.sPosition as 'top' | 'side',
+          m: urlParams.mPosition as 'top' | 'side',
+          l: urlParams.lPosition as 'top' | 'side',
+          xl: urlParams.xlPosition as 'top' | 'side',
         },
       }}
     />
@@ -83,32 +84,32 @@ function ConfigurationForm() {
               </Badge>
               <Box variant="code">{}</Box>
             </SpaceBetween>
-            <FormField label="Orientation">
+            <FormField label="Position">
               <RadioGroup
                 items={[
                   {
-                    value: 'horizontal',
-                    label: 'Horizontal',
+                    value: 'top',
+                    label: 'Top',
                   },
                   {
-                    value: 'vertical',
-                    label: 'Vertical',
+                    value: 'side',
+                    label: 'Side',
                   },
                 ]}
                 onChange={({ detail }) =>
-                  setUrlParams({ [breakpointName + 'Orientation']: detail.value as 'horizontal' | 'vertical' })
+                  setUrlParams({ [breakpointName + 'Position']: detail.value as 'top' | 'side' })
                 }
-                value={urlParams[breakpointName + 'Orientation']}
+                value={urlParams[breakpointName + 'Position']}
               />
             </FormField>
-            <FormField description="Only valid for 'vertical' orientation." label="Width">
+            <FormField description="Only valid for 'side' position." label="Width">
               <Input
                 placeholder={'example: 30% or 200px'}
                 value={urlParams[breakpointName + 'Width']}
                 onChange={event => setUrlParams({ [breakpointName + 'Width']: event.detail.value })}
               />
             </FormField>
-            <FormField description="Only valid for 'horizontal' orientation." label="Height">
+            <FormField description="Only valid for 'top' position." label="Height">
               <Input
                 placeholder={'example: 30% or 200px'}
                 value={urlParams[breakpointName + 'Height']}

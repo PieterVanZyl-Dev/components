@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 import clsx from 'clsx';
-import React, { useEffect, useRef, useState } from 'react';
-import { ContainerProps, MediaDefinition } from './interfaces';
+import React, { useEffect, useRef } from 'react';
+import { ContainerProps } from './interfaces';
 import { getBaseProps } from '../internal/base-component';
 import { useAppLayoutContext } from '../internal/context/app-layout-context';
 import { InternalBaseComponentProps } from '../internal/hooks/use-base-component';
@@ -12,9 +12,8 @@ import { useMergeRefs } from '../internal/hooks/use-merge-refs';
 import { useMobile } from '../internal/hooks/use-mobile';
 import { useVisualRefresh } from '../internal/hooks/use-visual-mode';
 import styles from './styles.css.js';
+import { useMedia } from './media';
 import { useFunnelSubStep } from '../internal/analytics/hooks/use-funnel';
-import { useContainerBreakpoints } from '../internal/hooks/container-queries';
-import { Breakpoint, matchBreakpointMapping } from '../internal/breakpoints';
 
 export interface InternalContainerProps extends Omit<ContainerProps, 'variant'>, InternalBaseComponentProps {
   __stickyHeader?: boolean;
@@ -77,25 +76,8 @@ export default function InternalContainer({
   const hasDynamicHeight = isRefresh && variant === 'full-page';
   const overlapElement = useDynamicOverlap({ disabled: !hasDynamicHeight || !__darkHeader });
 
-  const getBreakpointsForMedia = (media: any) => {
-    const breakpointKeys = new Set<Breakpoint>();
-
-    ['orientation', 'width', 'height'].forEach(key => {
-      if (media && typeof media[key] === 'object' && media[key] !== null) {
-        const breakpointMapping = media[key] as MediaDefinition.BreakpointMapping<any>;
-        Object.keys(breakpointMapping).forEach(key => {
-          const breakpoint = key as Breakpoint;
-          if (breakpoint !== 'default' && breakpointMapping[breakpoint]) {
-            breakpointKeys.add(breakpoint);
-          }
-        });
-      }
-    });
-    return Array.from(breakpointKeys);
-  };
-
-  const [breakpoint, breakpointRef] = useContainerBreakpoints(getBreakpointsForMedia(media));
-  const mergedRef = useMergeRefs(rootRef, __internalRootRef, subStepRef, breakpointRef);
+  const { breakpointRef, mediaPosition, mediaHeight, mediaWidth, mediaContent } = useMedia(media);
+  const mergedRef = useMergeRefs(rootRef, subStepRef, __internalRootRef, breakpointRef);
   const headerMergedRef = useMergeRefs(headerRef, overlapElement, __headerRef);
   const headerIdProp = __headerId ? { id: __headerId } : {};
 
@@ -121,62 +103,7 @@ export default function InternalContainer({
   // In this case we don't want the container to have sticky styles, as only the table header row will show as stuck on scroll.
   const shouldHaveStickyStyles = isSticky && !isMobile;
 
-  const [mediaContent, setMediaContent] = useState(null as React.ReactNode);
-  const [mediaHeight, setMediaHeight] = useState('' as MediaDefinition.Dimension);
-  const [mediaWidth, setMediaWidth] = useState('' as MediaDefinition.Dimension);
-  const [mediaOrientation, setMediaOrientation] = useState('horizontal' as MediaDefinition.Orientation);
-
-  useEffect(() => {
-    if (!media || !media.orientation || !breakpoint) {
-      return;
-    }
-    if (typeof media.orientation === 'string') {
-      setMediaOrientation(media.orientation);
-    } else {
-      const orientation = matchBreakpointMapping(media.orientation, breakpoint);
-      setMediaOrientation(orientation || media.orientation.default || 'horizontal');
-    }
-  }, [media, breakpoint]);
-
-  useEffect(() => {
-    if (!media || !media.width || !breakpoint) {
-      return;
-    }
-    if (typeof media.width === 'string' || typeof media.width === 'number') {
-      setMediaWidth(media.width);
-    } else {
-      const width = matchBreakpointMapping(media.width, breakpoint);
-      setMediaWidth(width || media.width.default || '');
-    }
-  }, [media, breakpoint]);
-
-  useEffect(() => {
-    if (!media || !media.height || !breakpoint) {
-      return;
-    }
-    if (typeof media.height === 'string' || typeof media.height === 'number') {
-      setMediaHeight(media.height);
-    } else {
-      const height = matchBreakpointMapping(media.height, breakpoint);
-      setMediaHeight(height || media.height.default || '');
-    }
-  }, [media, breakpoint]);
-
-  useEffect(() => {
-    if (!media || !media.content || !breakpoint) {
-      return;
-    }
-    if (typeof media.content === 'object' && 'default' in media.content) {
-      const content = matchBreakpointMapping(media.content, breakpoint);
-      setMediaContent(content);
-    } else {
-      setMediaContent(media.content);
-    }
-  }, [media, breakpoint]);
-
-  function getMediaStyles() {
-    return mediaOrientation === 'horizontal' ? { height: mediaHeight } : { width: mediaWidth };
-  }
+  const hasMedia = !!media?.content;
 
   return (
     <div
@@ -187,20 +114,23 @@ export default function InternalContainer({
         styles.root,
         styles[`variant-${variant}`],
         fitHeight && styles['fit-height'],
-        media?.content && (mediaOrientation === 'vertical' ? styles['vertical-media'] : styles['horizontal-media']),
+        hasMedia && (mediaPosition === 'top' ? styles['with-top-media'] : styles['with-side-media']),
         shouldHaveStickyStyles && [styles['sticky-enabled']]
       )}
       ref={mergedRef}
     >
-      {media?.content && (
-        <div className={clsx(styles[`media-${mediaOrientation}`], styles.media)} style={getMediaStyles()}>
+      {hasMedia && (
+        <div
+          className={clsx(styles[`media-${mediaPosition}`], styles.media)}
+          style={mediaPosition === 'top' ? { height: mediaHeight } : { width: mediaWidth }}
+        >
           {mediaContent}
         </div>
       )}
       <div
         className={clsx(
           styles['content-wrapper'],
-          media?.content && styles['content-wrapper-with-media'],
+          hasMedia && styles['content-wrapper-with-media'],
           fitHeight && styles['content-wrapper-fit-height']
         )}
       >
@@ -214,7 +144,7 @@ export default function InternalContainer({
                 [styles['header-stuck']]: isStuck,
                 [styles['with-paddings']]: !disableHeaderPaddings,
                 [styles['with-hidden-content']]: !children || __hiddenContent,
-                [styles['header-with-media']]: !!media?.content,
+                [styles['header-with-media']]: hasMedia,
               })}
               {...headerIdProp}
               {...stickyStyles}
@@ -229,7 +159,7 @@ export default function InternalContainer({
           </StickyHeaderContext.Provider>
         )}
         <div
-          className={clsx(styles.content, media?.content && styles['content-with-media'], {
+          className={clsx(styles.content, hasMedia && styles['content-with-media'], {
             [styles['with-paddings']]: !disableContentPaddings,
           })}
         >

@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 import React, { useContext } from 'react';
 import AppContext, { AppContextType } from '../app/app-context';
-import Container from '~components/container';
-import Header from '~components/header';
-import Link from '~components/link';
-import SpaceBetween from '~components/space-between';
-import Input from '~components/input';
-import FormField from '~components/form-field';
-import RadioGroup from '~components/radio-group';
 import { ContainerProps } from '~components/container';
+import Container from '~components/container';
+import FormField from '~components/form-field';
+import Header from '~components/header';
+import Input from '~components/input';
+import Link from '~components/link';
+import RadioGroup from '~components/radio-group';
 import ScreenshotArea from '../utils/screenshot-area';
+import SpaceBetween from '~components/space-between';
 import image169 from './images/16-9.png';
 import image43 from './images/4-3.png';
 import image916 from './images/9-16.png';
@@ -21,7 +21,7 @@ type DemoContext = React.Context<
   AppContextType<{
     width: string;
     height: string;
-    orientation: 'horizontal' | 'vertical';
+    position: 'top' | 'side';
     content: '16-9' | '4-3' | '9-16';
   }>
 >;
@@ -41,7 +41,7 @@ function ContainerPlayground(props: ContainerProps) {
         ),
         width: urlParams.width,
         height: urlParams.height,
-        orientation: urlParams.orientation,
+        position: urlParams.position,
       }}
     />
   );
@@ -51,34 +51,34 @@ function SettingsForm() {
   const { urlParams, setUrlParams } = useContext(AppContext as DemoContext);
   return (
     <SpaceBetween direction="horizontal" size="m">
-      <FormField description="Only valid for 'vertical' orientation." label="Media width">
+      <FormField description="Only valid for 'vertical' position." label="Media width">
         <Input
           placeholder={'example: 30%'}
           value={urlParams.width}
           onChange={event => setUrlParams({ width: event.detail.value })}
         />
       </FormField>
-      <FormField description="Only valid for 'horizontal' orientation." label="Media height">
+      <FormField description="Only valid for 'horizontal' position." label="Media height">
         <Input
           placeholder={'example: 200px'}
           value={urlParams.height}
           onChange={event => setUrlParams({ height: event.detail.value })}
         />
       </FormField>
-      <FormField label="Media orientation">
+      <FormField label="Media position">
         <RadioGroup
           items={[
             {
-              value: 'horizontal',
-              label: 'Horizontal',
+              value: 'top',
+              label: 'Top',
             },
             {
-              value: 'vertical',
-              label: 'Vertical',
+              value: 'side',
+              label: 'Side',
             },
           ]}
-          onChange={({ detail }) => setUrlParams({ orientation: detail.value as 'horizontal' | 'vertical' })}
-          value={urlParams.orientation}
+          onChange={({ detail }) => setUrlParams({ position: detail.value as 'top' | 'side' })}
+          value={urlParams.position}
         />
       </FormField>
       <FormField label="Content">

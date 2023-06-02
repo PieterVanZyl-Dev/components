@@ -52,34 +52,36 @@ export interface ContainerProps extends BaseComponentProps {
 }
 
 export namespace ContainerProps {
-  /**
-   * The value for each property can either be a single value (which applies for all breakpoints) or an object where the key
-   * is one of the supported breakpoints (`xxs`, `xs`, `s`, `m`, `l`, `xl`) or `default`.
-   * The value of this key is applied for that breakpoint and those above it. You must provide a `default` value for `content`.
-   */
   export interface Media {
     /**
-     * Use this slot to render your media element.
+     *
+     * Use this slot to render your media element. We support `img`, `video` and `picture` elements.
+     *
+     * The value for each media property can either be a single value (which applies for all breakpoints) or an object where the key
+     * is one of the supported breakpoints (`xxs`, `xs`, `s`, `m`, `l`, `xl`) or `default`.
+     * The value of this key is applied for that breakpoint and those above it. You must provide a `default` value for `content`.
      */
-    content?: React.ReactNode | MediaDefinition.ContentBreakpointMapping;
+    content?: MediaDefinition.Content | MediaDefinition.ContentBreakpointMapping;
 
     /**
-     * Defines the media slot's orientation within the container.
+     * Defines the media slot's position within the container. Defaults to `top`.
      */
-    orientation: MediaDefinition.Orientation | MediaDefinition.BreakpointMapping<MediaDefinition.Orientation>;
+    position?: MediaDefinition.Position | MediaDefinition.BreakpointMapping<MediaDefinition.Position>;
 
     /**
-     * Defines the width of the media slot when vertically oriented. Corresponds to the `width` CSS-property.
+     * Defines the width of the media slot when positioned on the side. Corresponds to the `width` CSS-property.
      * When this value is set, the media element may be cropped, with `object-fit: cover` centering it.
-     * Note: This value is considered only when `orientation` is set to `vertical`.
+     *
+     * Note: This value is considered only when `position` is set to `side`.
      * If no width is provided, the media slot will take a maximum of 66% of the container's width.
      */
     width?: MediaDefinition.Dimension | MediaDefinition.BreakpointMapping<MediaDefinition.Dimension>;
 
     /**
-     * Defines the height of the vertically oriented media slot. Corresponds to the `height` CSS-property.
+     * Defines the height of the media slot when position on the top. Corresponds to the `height` CSS-property.
      * When this value is set, the media element may be cropped, with `object-fit: cover` centering it.
-     * Note: This value is only considered if `orientation` is set to `vertical`.
+     *
+     * Note: This value is only considered if `position` is set to `top`.
      * If no height is provided, the media slot will be displayed at its full height.
      */
     height?: MediaDefinition.Dimension | MediaDefinition.BreakpointMapping<MediaDefinition.Dimension>;
@@ -90,7 +92,8 @@ export namespace MediaDefinition {
   export type ContentBreakpointMapping = MediaDefinition.BreakpointMapping<React.ReactNode> & {
     default: React.ReactNode;
   };
-  export type Orientation = 'horizontal' | 'vertical';
+  export type Content = React.ReactNode;
+  export type Position = 'top' | 'side';
   export type Dimension = string | number;
   export type BreakpointMapping<T> = Partial<Record<Breakpoint, T>>;
 }
