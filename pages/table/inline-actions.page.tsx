@@ -10,50 +10,61 @@ import Table, { TableProps } from '~components/table';
 import ScreenshotArea from '../utils/screenshot-area';
 import { Instance, generateItems } from './generate-data';
 import { columnsConfig } from './shared-configs';
+import Link from '~components/link';
 
 const items = generateItems(10);
 
+const simpleColumns = [columnsConfig[0], columnsConfig[1], columnsConfig[3], columnsConfig[4]];
+
 const columnDefinitionsSingle: TableProps.ColumnDefinition<Instance>[] = [
-  ...columnsConfig,
+  ...simpleColumns,
   {
     id: 'action',
     header: 'Actions',
-    cell: item =>
-      item.state === 'RUNNING' ? (
-        <Button
-          variant="inline-action"
-          iconName="external"
-          iconAlign="right"
-          ariaLabel={`Verify payment for ${item.id} (opens in new tab)`}
-        >
-          Verify payment
-        </Button>
-      ) : (
-        <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
-          Download
-        </Button>
-      ),
+    cell: item => (
+      <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
+        Download
+      </Button>
+    ),
   },
 ];
 const columnDefinitionsMultiple: TableProps.ColumnDefinition<Instance>[] = [
-  ...columnsConfig,
+  ...simpleColumns,
   {
     id: 'action',
     header: 'Actions',
     cell: item => (
       <SpaceBetween size="m" direction="horizontal">
-        <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
-          Download
-        </Button>
-        <Button variant="inline-action" ariaLabel={`Upload ${item.id}`}>
-          Update
-        </Button>
+        {item.state === 'TERMINATING' || item.state === 'TERMINATED' ? (
+          <>
+            <Button variant="inline-action" ariaLabel={`Accept ${item.id}`}>
+              Accept
+            </Button>
+            <Button variant="inline-action" ariaLabel={`Reject ${item.id}`}>
+              Reject
+            </Button>
+          </>
+        ) : item.state === 'RUNNING' ? (
+          <Button variant="inline-action" ariaLabel={`Cancel ${item.id}`}>
+            Cancel
+          </Button>
+        ) : item.state === 'STOPPED' ? (
+          <Button variant="inline-action" iconName="external" iconAlign="right" ariaLabel={`Verify payment ${item.id}`}>
+            Verify payment
+          </Button>
+        ) : item.state === 'STOPPING' ? (
+          <Button variant="inline-action" iconName="external" iconAlign="right" ariaLabel={`Verify email ${item.id}`}>
+            Verify email
+          </Button>
+        ) : (
+          '-'
+        )}
       </SpaceBetween>
     ),
   },
 ];
 const columnDefinitionsDropdown: TableProps.ColumnDefinition<Instance>[] = [
-  ...columnsConfig,
+  ...simpleColumns,
   {
     id: 'action',
     header: 'Actions',
@@ -64,11 +75,9 @@ const columnDefinitionsDropdown: TableProps.ColumnDefinition<Instance>[] = [
           expandToViewport={true}
           ariaLabel={`${item.id} actions`}
           items={[
-            { id: 'share', text: 'Share' },
-            { id: 'edit', text: 'Edit' },
-            { id: 'delete', text: 'Delete' },
             { id: 'connect', text: 'Connect' },
-            { id: 'manage', text: 'Manage state' },
+            { id: 'view', text: 'View details' },
+            { id: 'manage', text: 'Manage instances' },
           ]}
         />
       </Box>
@@ -76,25 +85,35 @@ const columnDefinitionsDropdown: TableProps.ColumnDefinition<Instance>[] = [
   },
 ];
 const columnDefinitionsMixed: TableProps.ColumnDefinition<Instance>[] = [
-  ...columnsConfig,
+  {
+    id: 'id',
+    header: 'Task name',
+    cell: item => <Link href={`#${item.id}`}>{item.id}</Link>,
+    sortingField: 'id',
+  },
+  columnsConfig[1],
+  {
+    id: 'dnsName',
+    header: 'value',
+    cell: item => item.dnsName || '-',
+    sortingField: 'dnsName',
+  },
   {
     id: 'action',
     header: 'Actions',
     cell: item => (
       <SpaceBetween size="xs" direction="horizontal">
-        <Button variant="inline-action" ariaLabel={`Download ${item.id}`}>
-          Download
+        <Button variant="inline-action" ariaLabel={`Edit ${item.id}`}>
+          Edit
         </Button>
         <ButtonDropdown
           variant="icon-action"
           expandToViewport={true}
           ariaLabel={`${item.id} actions`}
           items={[
-            { id: 'share', text: 'Share' },
-            { id: 'edit', text: 'Edit' },
+            { id: 'lock', text: 'Lock' },
             { id: 'delete', text: 'Delete' },
-            { id: 'connect', text: 'Connect' },
-            { id: 'manage', text: 'Manage state' },
+            { id: 'done', text: 'Mark as done' },
           ]}
         />
       </SpaceBetween>
@@ -102,7 +121,7 @@ const columnDefinitionsMixed: TableProps.ColumnDefinition<Instance>[] = [
   },
 ];
 const columnDefinitionsOnlyIcons: TableProps.ColumnDefinition<Instance>[] = [
-  ...columnsConfig,
+  ...simpleColumns,
   {
     id: 'action',
     header: 'Actions',
@@ -138,31 +157,46 @@ export default function () {
             header={<Header>Table with single actions</Header>}
             columnDefinitions={columnDefinitionsSingle}
             items={items}
-            resizableColumns={true}
           />
           <Table
             header={<Header>Table with multiple actions</Header>}
             columnDefinitions={columnDefinitionsMultiple}
             items={items}
-            resizableColumns={true}
           />
           <Table
-            header={<Header>Table with action dropdowns</Header>}
+            header={
+              <Header
+                actions={
+                  <SpaceBetween size="xs" direction="horizontal">
+                    <ButtonDropdown
+                      items={[
+                        { id: 'connect', text: 'Connect' },
+                        { id: 'view', text: 'View details' },
+                        { id: 'manage', text: 'Manage instances' },
+                      ]}
+                    >
+                      Actions
+                    </ButtonDropdown>
+                    <Button variant="primary">Launch instance</Button>
+                  </SpaceBetween>
+                }
+              >
+                Table with action dropdowns
+              </Header>
+            }
+            selectionType="multi"
             columnDefinitions={columnDefinitionsDropdown}
             items={items}
-            resizableColumns={true}
           />
           <Table
             header={<Header>Table with mixed actions</Header>}
             columnDefinitions={columnDefinitionsMixed}
             items={items}
-            resizableColumns={true}
           />
           <Table
             header={<Header>Table with only icon actions</Header>}
             columnDefinitions={columnDefinitionsOnlyIcons}
             items={items}
-            resizableColumns={true}
           />
         </SpaceBetween>
       </Box>
