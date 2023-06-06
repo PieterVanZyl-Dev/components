@@ -6,7 +6,6 @@
  */
 
 const customCssPropertiesList = [
-  'activeDrawerWidth',
   'offsetTop',
   'offsetTopWithNotifications',
   'contentGapLeft',
@@ -14,6 +13,7 @@ const customCssPropertiesList = [
   'contentHeight',
   'defaultMaxContentWidth',
   'defaultMinContentWidth',
+  'drawerSize',
   'footerHeight',
   'headerHeight',
   'layoutWidth',
