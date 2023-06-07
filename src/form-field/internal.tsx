@@ -20,6 +20,7 @@ import { useInternalI18n } from '../internal/i18n/context';
 import { FunnelMetrics } from '../internal/analytics';
 import { useFunnelSubStep } from '../internal/analytics/hooks/use-funnel';
 import { getSubStepAllSelector } from '../internal/analytics/selectors';
+import { InfoLinkLabelContext } from '../internal/context/info-link-label-context';
 
 interface FormFieldErrorProps {
   id?: string;
@@ -146,7 +147,9 @@ export default function InternalFormField({
             {label}
           </label>
         )}
-        {!__hideLabel && info && <span className={styles.info}>{info}</span>}
+        <InfoLinkLabelContext.Provider value={slotIds.label}>
+          {!__hideLabel && info && <span className={styles.info}>{info}</span>}
+        </InfoLinkLabelContext.Provider>
       </div>
 
       {description && (
